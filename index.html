@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laura Ledesna - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;800&family=Inter:wght@600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'syne': ['Syne', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#ffffff',
+                        'inverse': '#000000',
+                        'paragraph': '#0d0d0d',
+                    },
+                    spacing: {
+                        'none': '0',
+                        'xxs': '4px',
+                        'xs': '8px',
+                        's': '16px',
+                        'm': '24px',
+                        'lg': '32px',
+                        'xl': '48px',
+                        '2xl': '64px',
+                        '3xl': '80px',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Theme Variables */
+        .light {
+            --surface-primary: #ffffff;
+            --surface-inverse: #000000;
+            --surface-secondary: #f2f2f2;
+            --surface-tertiary: #e6e6e6;
+            --typography-heading: #000000;
+            --typography-paragraph: #0d0d0d;
+            --stroke-border: #000000;
+            --media-icon: #000000;
+        }
+
+        .dark {
+            --surface-primary: #000000;
+            --surface-inverse: #ffffff;
+            --surface-secondary: #1a1a1a;
+            --surface-tertiary: #333333;
+            --typography-heading: #ffffff;
+            --typography-paragraph: #ffffff;
+            --stroke-border: #ffffff;
+            --media-icon: #ffffff;
+        }
+
+        /* Theme Transition */
+        * {
+            transition: background-color 0.5s ease, 
+                      color 0.5s ease,
+                      border-color 0.5s ease,
+                      filter 0.5s ease;
+        }
+
+        .theme-transition-active {
+            animation: themeTransition 0.5s ease forwards;
+        }
+
+        @keyframes themeTransition {
+            0% {
+                transform: scale(1);
+                filter: blur(0);
+            }
+            50% {
+                transform: scale(1.02);
+                filter: blur(4px);
+            }
+            100% {
+                transform: scale(1);
+                filter: blur(0);
+            }
+        }
+
+        /* Theme-aware styles */
+        .bg-theme-primary {
+            background-color: var(--surface-primary);
+        }
+
+        .bg-theme-inverse {
+            background-color: var(--surface-inverse);
+        }
+
+        .text-theme-heading {
+            color: var(--typography-heading);
+        }
+
+        .text-theme-paragraph {
+            color: var(--typography-paragraph);
+        }
+
+        .border-theme {
+            border-color: var(--stroke-border);
+        }
+
+        .icon-theme {
+            filter: brightness(0) saturate(100%);
+            color: var(--media-icon);
+        }
+
+        /* Dark mode icon inversion */
+        .dark .icon-theme {
+            filter: brightness(0) saturate(100%) invert(1);
+        }
+
+        /* Card States */
+        .case-study-card {
+            background-color: var(--surface-primary);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border-color: var(--stroke-border);
+        }
+
+        .case-study-card:hover {
+            background-color: var(--surface-secondary);
+        }
+
+        .case-study-card:active {
+            background-color: var(--surface-tertiary);
+        }
+
+        /* Menu Item States */
+        .menu-item {
+            background-color: var(--surface-primary);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border-color: var(--stroke-border);
+        }
+
+        .menu-item:hover {
+            background-color: var(--surface-secondary);
+        }
+
+        .menu-item:active {
+            background-color: var(--surface-tertiary);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: max(2rem, calc((100vw - 1536px) / 2 + 2rem));
+            padding: 1rem;
+            background-color: var(--surface-primary);
+            border: 1px solid var(--stroke-border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 1s;
+            opacity: 0;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--surface-secondary);
+        }
+
+        .theme-toggle:active {
+            background-color: var(--surface-tertiary);
+        }
+
+        /* Animation Keyframes and Base Class */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        /* Animation Delays */
+        .nav-animation {
+            animation-delay: 0.1s;
+        }
+
+        .tile-1 {
+            animation-delay: 0.4s;
+        }
+        .tile-2 {
+            animation-delay: 0.5s;
+        }
+        .tile-3 {
+            animation-delay: 0.6s;
+        }
+
+        .case-study-animation {
+            animation-delay: 0.8s;
+        }
+        .case-study-1 {
+            animation-delay: 0.9s;
+        }
+
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Update icon styles */
+        .sun-icon, .moon-icon {
+            font-size: 24px;
+        }
+        
+        .sun-icon {
+            display: block;
+        }
+        .moon-icon {
+            display: none;
+        }
+        
+        .dark .sun-icon {
+            display: none;
+        }
+        .dark .moon-icon {
+            display: block;
+        }
+
+        /* Tile Hover Styles */
+        .tile-paragraph {
+            opacity: 0;
+            max-height: 0;
+            transition: opacity 0.3s ease, max-height 0.3s ease;
+            overflow: hidden;
+        }
+
+        .tile:hover .tile-paragraph {
+            opacity: 1;
+            max-height: 200px;
+        }
+
+        /* Smooth Scroll Behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Button States */
+        .scroll-button {
+            cursor: default;
+        }
+        
+        .scroll-text {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .scroll-text::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--typography-heading);
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+        
+        .scroll-text:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .scroll-text:active::after {
+            height: 4px;
+        }
+
+        /* Navigation Responsive Styles */
+        .mobile-menu {
+            display: none !important;
+        }
+
+        @media (max-width: 600px) {
+            .desktop-menu {
+                display: none !important;
+            }
+            .mobile-menu {
+                display: flex !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-theme-primary">
+    <div class="min-h-screen bg-theme-inverse p-[1px] flex flex-col gap-[1px] mx-auto" style="max-width: 1536px;">
+        <!-- Navigation -->
+        <!-- Desktop Navigation -->
+        <nav class="desktop-menu bg-theme-primary h-[82px] flex items-center justify-between pl-8 animate-slide-up nav-animation">
+            <div class="font-syne font-medium text-[16px] leading-[1.6] text-theme-heading">Laura Ledesna</div>
+            <div class="flex h-full">
+                <a href="#about" class="menu-item h-[82px] w-[167px] flex items-center px-4 border-l border-theme">
+                    <span class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">About</span>
+                </a>
+                <a href="#contact" class="menu-item h-[82px] w-[167px] flex items-center px-4 border-l border-theme">
+                    <span class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Contact</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Mobile Navigation -->
+        <nav class="mobile-menu bg-theme-primary h-[82px] flex items-center justify-between pl-4 pr-0 animate-slide-up nav-animation">
+            <div class="font-syne font-medium text-[16px] leading-[1.6] text-theme-heading whitespace-pre">Laura Ledesna</div>
+            <div class="bg-theme-primary flex items-center justify-center size-[82px] relative shrink-0 border-l border-theme">
+                <div class="relative shrink-0 size-8">
+                    <div class="absolute inset-[12.5%]">
+                        <img src="assets/List.svg" alt="Menu" class="block max-w-none size-full icon-theme">
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="bg-theme-inverse flex flex-wrap gap-[1px] w-full">
+            <div class="tile bg-theme-primary flex flex-col justify-between basis-0 grow min-w-[350px] h-[400px] px-8 py-6 animate-slide-up tile-1">
+                <div class="font-inter font-semibold text-[64px] leading-[1.4] text-theme-heading">01</div>
+                <div class="flex flex-col gap-2">
+                    <div class="font-syne font-medium text-[48px] leading-[1.4] text-theme-heading">Fast</div>
+                    <div class="tile-paragraph font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+                    </div>
+                </div>
+            </div>
+            <div class="tile bg-theme-primary flex flex-col justify-between basis-0 grow min-w-[350px] h-[400px] px-8 py-6 animate-slide-up tile-2">
+                <div class="font-inter font-semibold text-[64px] leading-[1.4] text-theme-heading">02</div>
+                <div class="flex flex-col gap-2">
+                    <div class="font-syne font-medium text-[48px] leading-[1.4] text-theme-heading">Focused</div>
+                    <div class="tile-paragraph font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+                    </div>
+                </div>
+            </div>
+            <div class="tile bg-theme-primary flex flex-col justify-between basis-0 grow min-w-[350px] h-[400px] px-8 py-6 animate-slide-up tile-3">
+                <div class="font-inter font-semibold text-[64px] leading-[1.4] text-theme-heading">03</div>
+                <div class="flex flex-col gap-2">
+                    <div class="font-syne font-medium text-[48px] leading-[1.4] text-theme-heading">Clear</div>
+                    <div class="tile-paragraph font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Case Studies Section -->
+        <section id="case-studies" class="bg-theme-primary px-8 py-16 flex flex-col gap-16 animate-slide-up case-study-animation">
+            <button onclick="document.getElementById('case-studies').scrollIntoView()" class="scroll-button flex flex-row gap-4 items-center justify-start max-w-[800px] bg-transparent border-0 p-0">
+                <div class="scroll-text font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">Just smart UX</div>
+                <div class="relative shrink-0 size-6">
+                    <div class="absolute inset-[12%]">
+                        <img src="assets/ArrowDown.svg" alt="Arrow Down" class="block max-w-none size-full icon-theme">
+                    </div>
+                </div>
+            </button>
+            <div class="flex flex-col gap-6">
+                <!-- Case Study Card 1 -->
+                <div class="w-full max-w-[792px] animate-slide-up case-study-1">
+                    <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px]">
+                        <div class="flex-1 bg-cover bg-center" style="background-image: url('assets/placeholder.jpg')"></div>
+                        <div class="flex-1 flex flex-col justify-between">
+                            <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Industry</div>
+                            <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">Case study name</div>
+                            <div class="flex justify-end">
+                                <div class="relative shrink-0 size-8">
+                                    <div class="absolute inset-[15%]">
+                                        <img src="assets/ArrowDownRight.svg" alt="Arrow" class="block max-w-none size-full icon-theme">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study Card 2 -->
+                <div class="w-full max-w-[792px] self-end scroll-animate" data-scroll>
+                    <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px]">
+                        <div class="flex-1 bg-cover bg-center" style="background-image: url('assets/placeholder.jpg')"></div>
+                        <div class="flex-1 flex flex-col justify-between">
+                            <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Industry</div>
+                            <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">Case study name</div>
+                            <div class="flex justify-end">
+                                <div class="relative shrink-0 size-8">
+                                    <div class="absolute inset-[15%]">
+                                        <img src="assets/ArrowDownRight.svg" alt="Arrow" class="block max-w-none size-full icon-theme">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study Card 3 -->
+                <div class="w-full max-w-[792px] scroll-animate" data-scroll>
+                    <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px]">
+                        <div class="flex-1 bg-cover bg-center" style="background-image: url('assets/placeholder.jpg')"></div>
+                        <div class="flex-1 flex flex-col justify-between">
+                            <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Industry</div>
+                            <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">Case study name</div>
+                            <div class="flex justify-end">
+                                <div class="relative shrink-0 size-8">
+                                    <div class="absolute inset-[15%]">
+                                        <img src="assets/ArrowDownRight.svg" alt="Arrow" class="block max-w-none size-full icon-theme">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <!-- Sun Icon -->
+        <i class="ph ph-sun sun-icon icon-theme"></i>
+        <!-- Moon Icon -->
+        <i class="ph ph-moon moon-icon icon-theme"></i>
+    </button>
+
+    <script>
+        // Set initial theme based on system preference
+        function setInitialTheme() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.add(prefersDark ? 'dark' : 'light');
+        }
+        
+        // Call immediately to avoid flash of wrong theme
+        setInitialTheme();
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            document.documentElement.classList.remove('light', 'dark');
+            document.documentElement.classList.add(e.matches ? 'dark' : 'light');
+        });
+
+        // Theme Toggle Functionality
+        const html = document.documentElement;
+        const themeToggle = document.querySelector('.theme-toggle');
+        const mainContent = document.querySelector('.min-h-screen');
+        
+        themeToggle.addEventListener('click', () => {
+            mainContent.classList.add('theme-transition-active');
+            
+            if (html.classList.contains('light')) {
+                html.classList.remove('light');
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+                html.classList.add('light');
+            }
+            
+            setTimeout(() => {
+                mainContent.classList.remove('theme-transition-active');
+            }, 500);
+        });
+
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('[data-scroll]').forEach((element) => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html> 
