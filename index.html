@@ -17,7 +17,7 @@
                     },
                     colors: {
                         'primary': '#ffffff',
-                        'inverse': '#000000',
+                        'inverse': '#cccccc',
                         'paragraph': '#0d0d0d',
                     },
                     spacing: {
@@ -44,23 +44,23 @@
         /* Theme Variables */
         .light {
             --surface-primary: #ffffff;
-            --surface-inverse: #000000;
+            --surface-inverse: #cccccc;
             --surface-secondary: #f2f2f2;
             --surface-tertiary: #e6e6e6;
             --typography-heading: #000000;
             --typography-paragraph: #0d0d0d;
-            --stroke-border: #000000;
+            --stroke-border: #cccccc;
             --media-icon: #000000;
         }
 
         .dark {
             --surface-primary: #000000;
-            --surface-inverse: #ffffff;
+            --surface-inverse: #333333;
             --surface-secondary: #1a1a1a;
             --surface-tertiary: #333333;
             --typography-heading: #ffffff;
             --typography-paragraph: #ffffff;
-            --stroke-border: #ffffff;
+            --stroke-border: #333333;
             --media-icon: #ffffff;
         }
 
@@ -439,6 +439,21 @@
                 </div>
             </div>
         </section>
+
+        <!-- Footer -->
+        <footer class="bg-theme-primary px-8 py-6 flex items-center justify-between animate-slide-up" style="animation-delay: 1.2s;">
+            <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">
+                Laura Ledesna • ©2025
+            </div>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-button flex items-center gap-2">
+                <span class="scroll-text font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Back to top</span>
+                <div class="relative shrink-0 size-4">
+                    <div class="absolute inset-[12.5%]">
+                        <img src="assets/ArrowUp.svg" alt="Arrow Up" class="block max-w-none size-full icon-theme">
+                    </div>
+                </div>
+            </button>
+        </footer>
     </div>
 
     <!-- Theme Toggle Button -->
