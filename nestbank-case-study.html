@@ -217,34 +217,18 @@
 
         /* Theme Toggle Button */
         .theme-toggle {
-            position: fixed;
-            bottom: 2rem;
-            right: max(2rem, calc((100vw - 1536px) / 2 + 2rem));
-            padding: 1rem;
-            background-color: var(--surface-primary);
-            border: 1px solid var(--stroke-border);
+            background: none;
+            border: none;
+            padding: 0;
             cursor: pointer;
-            transition: all 0.2s ease;
-            width: 3.5rem;
-            height: 3.5rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            z-index: 50;
-            opacity: 1;
-        }
-
-        .theme-toggle:hover {
-            background-color: var(--surface-secondary);
-        }
-
-        .theme-toggle:active {
-            background-color: var(--surface-tertiary);
+            gap: 0.5rem;
         }
 
         /* Update icon styles */
         .sun-icon, .moon-icon {
-            font-size: 24px;
+            font-size: 16px;
         }
         
         .sun-icon {
@@ -259,6 +243,31 @@
         }
         .dark .moon-icon {
             display: block;
+        }
+
+        .theme-text {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .theme-text::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--typography-heading);
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+        
+        .theme-text:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .theme-text:active::after {
+            height: 4px;
         }
     </style>
 </head>
@@ -365,10 +374,11 @@
                 <div class="basis-0 grow flex flex-col justify-flex-start">
                     <div class="flex flex-row gap-6">
                         <div class="basis-0 grow">
-                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Opportunity</p>
+                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Business Problem</p>
                         </div>
                         <div class="basis-0 grow">
-                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">“A better experience for Grammen members means more affiliate members acquiring new credits. If members are satisfied and confident with Grameen, they will expand their network by bringing in new members, who can in turn positively impact their surrounding community”</p>
+                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Members spent excessive time on basic queries while struggling to manage scattered loan information independently. <br> Rather than focusing on scaling human resources, we uncovered a fragmented information architecture that limited member self-service. Addressing it required designing with a level of cultural sensitivity well beyond what’s expected in typical financial apps.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -383,14 +393,14 @@
                 <!-- Statistic Card 1 -->
                 <div class="basis-0 grow min-w-[300px] bg-theme-primary p-6 border border-theme">
                     <div class="font-inter font-semibold text-[64px] leading-[1.4] text-theme-heading mb-6">
-                        111,000+
+                        21%
                     </div>
                     <div class="flex flex-col gap-2">
                         <h3 class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">
-                            Active Users
+                            Retention Growth
                         </h3>
                         <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
-                            Paragraph - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                            Raise retention and grow organizational reach by 21%. Three points above last year.
                         </p>
                     </div>
                 </div>
@@ -398,14 +408,14 @@
                 <!-- Statistic Card 2 -->
                 <div class="basis-0 grow min-w-[300px] bg-theme-primary p-6 border border-theme">
                     <div class="font-inter font-semibold text-[64px] leading-[1.4] text-theme-heading mb-6">
-                        4.9 ★
+                        30%
                     </div>
                     <div class="flex flex-col gap-2">
                         <h3 class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">
-                            Average app store rating
+                            Productivity Improvement
                         </h3>
                         <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
-                            Paragraph - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                            Increase employee productivity by 30% within the first year of app launch.
                         </p>
                     </div>
                 </div>
@@ -413,64 +423,16 @@
                 <!-- Statistic Card 3 -->
                 <div class="basis-0 grow min-w-[300px] bg-theme-primary p-6 border border-theme">
                     <div class="font-inter font-semibold text-[64px] leading-[1.4] text-theme-heading mb-6">
-                        80k
+                        18%
                     </div>
                     <div class="flex flex-col gap-2">
                         <h3 class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">
-                            Unique User Logins per week
+                            Change Adoption Boost
                         </h3>
                         <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
-                            Paragraph - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-                        </p>
+                            Reduce change impact and boost adoption of new management processes.                        </p>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Content Block with Multiple Text Sections -->
-        <div class="bg-theme-primary p-8 scroll-animate" data-scroll>
-            <div class="w-full mx-auto flex flex-row gap-8">
-                <!-- Text Content -->
-                <div class="basis-0 grow flex flex-col gap-8">
-                    <!-- Text Block 1 -->
-                    <div class="flex flex-row gap-6">
-                        <div class="basis-0 grow">
-                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Business problem:</p>
-                        </div>
-                        <div class="basis-0 grow">
-                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
-                                Growing customer base strained employee ability to conduct one-on-one interactions. Members spent excessive time on basic queries while struggling to manage scattered loan information independently.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Text Block 2 -->
-                    <div class="flex flex-row gap-6">
-                        <div class="basis-0 grow">
-                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Alternatives considered:</p>
-                        </div>
-                        <div class="basis-0 grow">
-                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
-                                Hire more staff to handle growth, implement existing financial platforms, or maintain manual processes.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Text Block 3 -->
-                    <div class="flex flex-row gap-6">
-                        <div class="basis-0 grow">
-                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">My strategic reframe:</p>
-                        </div>
-                        <div class="basis-0 grow">
-                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
-                                Rather than scaling human resources, I identified disconnected information architecture preventing member self-service. This required designing for a community historically excluded from mainstream financial systems, demanding cultural sensitivity beyond typical financial apps.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Image -->
-                <div class="basis-0 grow bg-cover bg-center" style="background-image: url('assets/nestbank-case-study/media-3.png')"></div>
             </div>
         </div>
 
@@ -481,45 +443,86 @@
             </video>
         </div>
 
-        <!-- Controversial Decisions Section -->
+        <!-- Content Block with Multiple Text Sections -->
         <div class="bg-theme-primary p-8 scroll-animate" data-scroll>
-            <div class="w-full">
-                <h2 class="font-syne font-medium text-[32px] leading-[1.4] text-theme-heading mb-14">Outcome</h2>
-                <div class="flex flex-col gap-8">
+            <div class="w-full mx-auto flex flex-row gap-8">
+                <!-- Text Content -->
+                <div class="basis-0 grow flex flex-col gap-8">
 
-                    <!-- Boost retention -->
+                    <!-- Text Block 1 -->
                     <div class="flex flex-row gap-6">
                         <div class="basis-0 grow">
-                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Boost retention and grow reach by 21% annually—up 3 points from last year.</p>
+                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Mar</p>
                         </div>
                         <div class="basis-0 grow">
-                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">We did this through building key features to resolve pain points by analyzing customer behavior and preferences through data and analytics tools.</p>
+                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                                Complex financial data overwhelmed users → I centralized scattered information into intuitive dashboard design</p>
                         </div>
                     </div>
 
-                    <!-- Boost emaployee productivity -->
+                    <!-- Text Block 2 -->
                     <div class="flex flex-row gap-6">
                         <div class="basis-0 grow">
-                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Boost employee productivity by 30% in the first year of app use.</p>
+                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">May</p>
                         </div>
                         <div class="basis-0 grow">
-                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">We did this by streamlining member interactions, cutting time on routine tasks, and delivering insights through tech adoption models.</p>
+                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                                PSD2 compliance threatened user experience → I designed friendly onboarding that met security requirements without intimidation</p>
                         </div>
                     </div>
 
-
-                    <!-- Boost emaployee productivity -->
+                    <!-- Text Block 3 -->
                     <div class="flex flex-row gap-6">
                         <div class="basis-0 grow">
-                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Minimize disruption and boost adoption of new management processes.</p>
+                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Aug</p>
                         </div>
                         <div class="basis-0 grow">
-                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">We did this by executing a three-phase strategy: awareness, preparation and endurance. Including a broad user-centric perspective in overall project strategy and decisions</p>
+                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                                Stakeholders expected simple microlending app → I designed comprehensive user research to understand excluded community needs.</p>
+                        </div>
+                    </div>
+
+                    <!-- Text Block 4 -->
+                    <div class="flex flex-row gap-6">
+                        <div class="basis-0 grow">
+                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Sep</p>
+                        </div>
+                        <div class="basis-0 grow">
+                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                                Organization wanted basic attendance lists → I created peer voting visualization system to maintain community trust.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Text Block 5 -->
+                    <div class="flex flex-row gap-6">
+                        <div class="basis-0 grow">
+                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Nov</p>
+                        </div>
+                        <div class="basis-0 grow">
+                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                                Members feared technology would disrupt relationships → I developed three-phase change management to involve users from the beginning.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Text Block 6 -->
+                    <div class="flex flex-row gap-6">
+                        <div class="basis-0 grow">
+                            <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Dec</p>
+                        </div>
+                        <div class="basis-0 grow">
+                            <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                                Budget constraints limited testing scope → I defended A/B testing to validate gamification  approach with real users.
+                            </p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Image -->
+                <div class="basis-0 grow bg-cover bg-center" style="background-image: url('assets/nestbank-case-study/media-3.jpg')"></div>
             </div>
-        </div>     
+        </div>
 
         <!-- Two Column Image Block -->
         <div class="bg-theme-primary p-8 scroll-animate" data-scroll>
@@ -535,7 +538,7 @@
             </div>
         </div>
 
-        <!-- Controversial Decisions Section -->
+        <!-- Controversial Decisions -->
         <div class="bg-theme-primary p-8 scroll-animate" data-scroll>
             <div class="w-full">
                 <h2 class="font-syne font-medium text-[32px] leading-[1.4] text-theme-heading mb-14">Controversial Decisions</h2>
@@ -561,6 +564,7 @@
                         </div>
                     </div>
 
+
                     <!-- Feature-First Choice -->
                     <div class="flex flex-row gap-6">
                         <div class="basis-0 grow">
@@ -580,10 +584,11 @@
                             <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Leadership wanted to focus development resources on loan management features to show immediate business value. I argued that without proper change management, even perfect features would fail due to emotional resistance from members.</p>
                         </div>
                     </div>
+
                 </div>
             </div>
-        </div>        
-
+        </div>  
+        
         <!-- Full Width Image Section -->
         <div class="bg-theme-primary p-8 scroll-animate" data-scroll>
             <video class="case-study-hero w-full h-full object-cover" autoplay muted loop playsinline>
@@ -592,9 +597,9 @@
 
         <!-- What We Got Wrong Section -->
         <div class="bg-theme-primary p-8 scroll-animate" data-scroll>
-            <div class="w-full">
-                <h2 class="font-syne font-medium text-[32px] leading-[1.4] text-theme-heading mb-14">What We Got Wrong</h2>
-                <div class="flex flex-col gap-8">
+                         <div class="w-full h-[500px]">
+                  <h2 class="font-syne font-medium text-[32px] leading-[1.4] text-theme-heading mb-14">What We Got Wrong</h2>
+                  <div class="flex flex-col gap-8">
                     <!-- Failed Hypothesis 1 -->
                     <div class="flex flex-row gap-6">
                         <div class="basis-0 grow">
@@ -628,11 +633,60 @@
             </div>
         </div>
 
+        <!-- Where We're Going -->
+        <div class="bg-theme-primary p-8 scroll-animate" data-scroll>
+            <div class="w-full flex flex-row gap-8 h-[725px]">
+                <div class="basis-0 grow flex flex-col justify-start">
+                    <h2 class="font-syne font-medium text-[32px] leading-[1.4] text-theme-heading mb-14">Where We’re Going</h2>
+                    <div class="flex flex-col gap-8">
+                        <!-- Step 1 -->
+                        <div class="flex flex-row gap-6">
+                            <div class="basis-0 grow">
+                                <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Individual → Community</p>
+                            </div>
+                            <div class="basis-0 grow">
+                                <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Shift from solo dashboards to shared, peer-driven tools.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="flex flex-row gap-6">
+                            <div class="basis-0 grow">
+                                <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Onboarding → Trust</p>
+                            </div>
+                            <div class="basis-0 grow">
+                                <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Extend onboarding into a 90-day guided experience with other members.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="flex flex-row gap-6">
+                            <div class="basis-0 grow">
+                                <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Utility → Empowerment</p>
+                            </div>
+                            <div class="basis-0 grow">
+                                <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Add cues, visuals, and feedback to boost engagement.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image -->
+                <div class="basis-0 grow bg-cover bg-center" style="background-image: url('assets/nestbank-case-study/media-8.jpg')"></div>
+            </div>
+        </div>
+
+
         <!-- Footer -->
         <footer class="bg-theme-primary px-8 py-6 flex items-center justify-between animate-slide-up" style="animation-delay: 1.2s;">
             <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">
                 Laura Ledesna • ©2025
             </div>
+            <button class="theme-toggle flex items-center gap-2" aria-label="Toggle theme">
+                <span class="theme-text font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Toggle theme</span>
+                <i class="ph ph-sun sun-icon icon-theme"></i>
+                <i class="ph ph-moon moon-icon icon-theme"></i>
+            </button>
             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-button flex items-center gap-2">
                 <span class="scroll-text font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Back to top</span>
                 <div class="relative shrink-0 size-4">
@@ -644,47 +698,56 @@
         </footer>
     </div>
 
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" aria-label="Toggle theme">
-        <i class="ph ph-sun sun-icon icon-theme"></i>
-        <i class="ph ph-moon moon-icon icon-theme"></i>
-    </button>
-
     <script>
-        // Set initial theme based on system preference
+        // Theme management
+        function setTheme(theme) {
+            const html = document.documentElement;
+            const mainContent = document.querySelector('.min-h-screen');
+            
+            mainContent?.classList.add('theme-transition-active');
+            
+            html.classList.remove('light', 'dark');
+            html.classList.add(theme);
+            localStorage.setItem('theme', theme);
+            
+            setTimeout(() => {
+                mainContent?.classList.remove('theme-transition-active');
+            }, 500);
+        }
+
+        // Set initial theme based on stored preference or system preference
         function setInitialTheme() {
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            document.documentElement.classList.add(prefersDark ? 'dark' : 'light');
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme) {
+                setTheme(storedTheme);
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                setTheme(prefersDark ? 'dark' : 'light');
+            }
         }
         
         // Call immediately to avoid flash of wrong theme
         setInitialTheme();
 
-        // Listen for system theme changes
+        // Listen for system theme changes (only if no stored preference)
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            document.documentElement.classList.remove('light', 'dark');
-            document.documentElement.classList.add(e.matches ? 'dark' : 'light');
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
         });
 
         // Theme Toggle Functionality
-        const html = document.documentElement;
         const themeToggle = document.querySelector('.theme-toggle');
-        const mainContent = document.querySelector('.min-h-screen');
         
-        themeToggle.addEventListener('click', () => {
-            mainContent.classList.add('theme-transition-active');
+        themeToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             
-            if (html.classList.contains('light')) {
-                html.classList.remove('light');
-                html.classList.add('dark');
-            } else {
-                html.classList.remove('dark');
-                html.classList.add('light');
-            }
+            const html = document.documentElement;
+            const newTheme = html.classList.contains('light') ? 'dark' : 'light';
+            setTheme(newTheme);
             
-            setTimeout(() => {
-                mainContent.classList.remove('theme-transition-active');
-            }, 500);
+            return false;
         });
     </script>
 </body>

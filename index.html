@@ -156,30 +156,38 @@
 
         /* Theme Toggle Button */
         .theme-toggle {
-            position: fixed;
-            bottom: 2rem;
-            right: max(2rem, calc((100vw - 1536px) / 2 + 2rem));
-            padding: 1rem;
-            background-color: var(--surface-primary);
-            border: 1px solid var(--stroke-border);
+            background: none;
+            border: none;
+            padding: 0;
             cursor: pointer;
-            transition: all 0.2s ease;
-            width: 3.5rem;
-            height: 3.5rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 1s;
-            opacity: 0;
+            gap: 0.5rem;
         }
 
-        .theme-toggle:hover {
-            background-color: var(--surface-secondary);
+        .theme-text {
+            position: relative;
+            cursor: pointer;
         }
-
-        .theme-toggle:active {
-            background-color: var(--surface-tertiary);
+        
+        .theme-text::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--typography-heading);
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+        
+        .theme-text:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .theme-text:active::after {
+            height: 4px;
         }
 
         /* Animation Keyframes and Base Class */
@@ -234,7 +242,7 @@
 
         /* Update icon styles */
         .sun-icon, .moon-icon {
-            font-size: 24px;
+            font-size: 16px;
         }
         
         .sun-icon {
@@ -374,8 +382,8 @@
         </section>
 
         <!-- Case Studies Section -->
-        <section id="case-studies" class="bg-theme-primary px-8 py-16 flex flex-col gap-16 animate-slide-up case-study-animation">
-            <button onclick="document.getElementById('case-studies').scrollIntoView()" class="scroll-button flex flex-row gap-4 items-center justify-start max-w-[800px] bg-transparent border-0 p-0">
+        <section id="case-studies" class="bg-theme-primary px-8 pt-16 pb-8 flex flex-col animate-slide-up case-study-animation">
+            <button onclick="document.getElementById('case-studies').scrollIntoView()" class="scroll-button flex flex-row gap-4 items-center justify-start max-w-[800px] bg-transparent border-0 p-0 mb-16">
                 <div class="scroll-text font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">Just Smart UX</div>
                 <div class="relative shrink-0 size-6">
                     <div class="absolute inset-[12%]">
@@ -383,7 +391,7 @@
                     </div>
                 </div>
             </button>
-            <div class="flex flex-col gap-6">
+            <div class="flex flex-col space-y-6">
                 <!-- Case Study Card 1 -->
                 <div class="w-full max-w-[792px] animate-slide-up case-study-1">
                     <a href="ai-solution-case-study.html" class="block">
@@ -401,13 +409,19 @@
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
 
                 <!-- Case Study Card 2 -->
                 <div class="w-full max-w-[792px] self-end scroll-animate" data-scroll>
                     <a href="nestbank-case-study.html" class="block">
-                        <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px]">
-                            <div class="flex-1 bg-cover bg-center" style="background-image: url('assets/placeholder.jpg')"></div>
+                        <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px] group">
+                            <div class="flex-1 relative">
+                                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/nestbank-case-study/media-10.png')"></div>
+                                <video class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100" autoplay muted loop playsinline>
+                                    <source src="assets/nestbank-case-study/media-9.mp4" type="video/mp4">
+                                </video>
+                            </div>
                             <div class="flex-1 flex flex-col justify-between">
                                 <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Fintech • Mobile App</div>
                                 <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">Nestbank: Inclusive Financial Access</div>
@@ -426,7 +440,7 @@
                 <!-- Case Study Card 3 -->
                 <div class="w-full max-w-[792px] scroll-animate" data-scroll>
                     <a href="medigo-case-study.html" class="block">
-                    <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px]">
+                        <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px]">
                         <div class="flex-1 bg-cover bg-center" style="background-image: url('assets/placeholder.jpg')"></div>
                         <div class="flex-1 flex flex-col justify-between">
                             <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Healthcare • AI Solution • Mobile App</div>
@@ -440,6 +454,7 @@
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -449,6 +464,11 @@
             <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">
                 Laura Ledesna • ©2025
             </div>
+            <button type="button" class="theme-toggle flex items-center gap-2" aria-label="Toggle theme">
+                <span class="theme-text font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Toggle theme</span>
+                <i class="ph ph-sun sun-icon icon-theme"></i>
+                <i class="ph ph-moon moon-icon icon-theme"></i>
+            </button>
             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-button flex items-center gap-2">
                 <span class="scroll-text font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Back to top</span>
                 <div class="relative shrink-0 size-4">
@@ -460,49 +480,56 @@
         </footer>
     </div>
 
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" aria-label="Toggle theme">
-        <!-- Sun Icon -->
-        <i class="ph ph-sun sun-icon icon-theme"></i>
-        <!-- Moon Icon -->
-        <i class="ph ph-moon moon-icon icon-theme"></i>
-    </button>
-
     <script>
-        // Set initial theme based on system preference
+        // Theme management
+        function setTheme(theme) {
+            const html = document.documentElement;
+            const mainContent = document.querySelector('.min-h-screen');
+            
+            mainContent?.classList.add('theme-transition-active');
+            
+            html.classList.remove('light', 'dark');
+            html.classList.add(theme);
+            localStorage.setItem('theme', theme);
+            
+            setTimeout(() => {
+                mainContent?.classList.remove('theme-transition-active');
+            }, 500);
+        }
+
+        // Set initial theme based on stored preference or system preference
         function setInitialTheme() {
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            document.documentElement.classList.add(prefersDark ? 'dark' : 'light');
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme) {
+                setTheme(storedTheme);
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                setTheme(prefersDark ? 'dark' : 'light');
+            }
         }
         
         // Call immediately to avoid flash of wrong theme
         setInitialTheme();
 
-        // Listen for system theme changes
+        // Listen for system theme changes (only if no stored preference)
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            document.documentElement.classList.remove('light', 'dark');
-            document.documentElement.classList.add(e.matches ? 'dark' : 'light');
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
         });
 
         // Theme Toggle Functionality
-        const html = document.documentElement;
         const themeToggle = document.querySelector('.theme-toggle');
-        const mainContent = document.querySelector('.min-h-screen');
         
-        themeToggle.addEventListener('click', () => {
-            mainContent.classList.add('theme-transition-active');
+        themeToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             
-            if (html.classList.contains('light')) {
-                html.classList.remove('light');
-                html.classList.add('dark');
-            } else {
-                html.classList.remove('dark');
-                html.classList.add('light');
-            }
+            const html = document.documentElement;
+            const newTheme = html.classList.contains('light') ? 'dark' : 'light';
+            setTheme(newTheme);
             
-            setTimeout(() => {
-                mainContent.classList.remove('theme-transition-active');
-            }, 500);
+            return false;
         });
 
         // Intersection Observer for scroll animations
