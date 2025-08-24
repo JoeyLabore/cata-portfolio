@@ -37,9 +37,14 @@
         }
     </script>
     <style>
-        body {
+        /* Case studies section spacing */
+        /* 48px from 03 section above and 48px from cards below */
+        #case-studies { padding-top: 48px; padding-bottom: 64px; }
+        #case-studies .scroll-button { margin-bottom: 48px; }
+        html, body {
             margin: 0;
             padding: 0;
+            overflow-x: hidden; /* avoid accidental horizontal scroll */
         }
 
         /* Theme Variables */
@@ -72,6 +77,9 @@
                       border-color 0.5s ease,
                       filter 0.5s ease;
         }
+
+        /* Ensure predictable sizing */
+        *, *::before, *::after { box-sizing: border-box; }
 
         .theme-transition-active {
             animation: themeTransition 0.5s ease forwards;
@@ -319,7 +327,129 @@
             }
             .mobile-menu {
                 display: flex !important;
+                /* 16px gutters in mobile nav */
+                padding-left: 16px !important;
+                padding-right: 0px !important;
             }
+
+            /* Case study card: mobile vertical layout */
+            .case-study-card {
+                flex-direction: column !important;
+                gap: 0 !important;
+                height: auto !important;
+            }
+            /* Hero tiles: force full-width to avoid overflow from min-w-[350px] */
+            .tile {
+                min-width: 100% !important;
+                width: 100% !important;
+                height: 300px !important;
+                border-bottom: 1px solid var(--stroke-border) !important; /* visual divider */
+            }
+            .tile:last-child { border-bottom: 0 !important; }
+            /* Tile number size */
+            .tile > div:first-child {
+                font-size: 48px !important;
+                line-height: 1.4 !important;
+            }
+            /* Tile heading size (Fast, Focused, Clear) */
+            .tile > div:nth-child(2) > div:first-child {
+                font-size: 32px !important;
+                line-height: 1.4 !important;
+            }
+            /* Remove 1px flex gap that shows as a right stripe on small screens */
+            section.bg-theme-inverse {
+                gap: 0 !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+            /* Ensure card wrappers span full width on mobile */
+            .w-full.max-w-\[792px\] { max-width: 100% !important; }
+            .self-end { align-self: stretch !important; }
+
+            /* Enforce 16px gutters on key sections */
+            #case-studies,
+            footer,
+            .tile,
+            .desktop-menu { /* if ever shown on tiny screens via tweaks */
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+            }
+            /* Bottom space between last card and footer */
+            #case-studies { padding-bottom: 48px !important; }
+            /* Ensure 48px spacing around the "Just Smart UX" heading on mobile too */
+            #case-studies { padding-top: 48px !important; }
+            #case-studies .scroll-button { margin-bottom: 48px !important; }
+            /* Global overrides: convert common 32px paddings to 16px */
+            .px-8 { padding-left: 16px !important; padding-right: 16px !important; }
+            .p-8 { padding-left: 16px !important; padding-right: 16px !important; }
+            .pl-8 { padding-left: 16px !important; }
+            .pr-8 { padding-right: 16px !important; }
+            /* Case studies heading "Just Smart UX" */
+            #case-studies .scroll-text {
+                font-size: 20px !important;
+                line-height: 1.4 !important;
+            }
+            
+            /* Constrain main wrapper to viewport width and hide overflow */
+            .min-h-screen {
+                max-width: 100vw !important;
+                width: 100% !important;
+                overflow-x: hidden !important;
+            }
+            section, nav, footer { max-width: 100% !important; }
+            /* Top media block (image/video) */
+            .case-study-card > div:first-child {
+                position: relative !important;
+                width: 100% !important;
+                height: 200px !important;
+                flex: none !important;
+            }
+            .case-study-card > div:first-child > .absolute { /* bg image and video overlay */
+                inset: 0 !important;
+            }
+            /* Content block spacing */
+            .case-study-card > div:last-child {
+                width: 100% !important;
+                padding-top: 16px !important; /* gap/s */
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: flex-start !important;
+                row-gap: 16px !important; /* 16px between industry, title, icon */
+            }
+            /* Title size for mobile card */
+            .case-study-card > div:last-child > div:nth-child(2) {
+                font-size: 20px !important;
+                line-height: 1.4 !important;
+            }
+            /* Category size for mobile card */
+            .case-study-card > div:last-child > div:first-child {
+                font-size: 14px !important;
+                line-height: 1.6 !important;
+            }
+        }
+        
+        /* Global horizontal spacing rules for <= 750px */
+        @media (max-width: 750px) {
+            /* Override Tailwind paddings used for horizontal page gutters */
+            .px-8 {
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+            }
+            .p-8 {
+                /* Keep vertical padding from Tailwind; only reduce horizontal */
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+            }
+            .pl-8 { padding-left: 24px !important; }
+            .pr-8 { padding-right: 24px !important; }
+
+            /* Footer adjustments: icon-only theme toggle and no back-to-top */
+            footer .scroll-button { display: none !important; }
+            .theme-toggle .theme-text { display: none !important; }
+            .theme-toggle { gap: 0 !important; }
+
+            /* Remove wrapper horizontal padding (p-[1px]) to avoid extra stripe */
+            .min-h-screen { padding-left: 0 !important; padding-right: 0 !important; }
         }
     </style>
 </head>
@@ -358,7 +488,7 @@
                 <div class="flex flex-col gap-2">
                     <div class="font-syne font-medium text-[48px] leading-[1.4] text-theme-heading">Fast</div>
                     <div class="tile-paragraph font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+                        I design and use frameworks so teams don’t have to reinvent the wheel.
                     </div>
                 </div>
             </div>
@@ -367,7 +497,7 @@
                 <div class="flex flex-col gap-2">
                     <div class="font-syne font-medium text-[48px] leading-[1.4] text-theme-heading">Focused</div>
                     <div class="tile-paragraph font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+                        I’m not afraid of being replaced by AI, I'm focused on designing with it.
                     </div>
                 </div>
             </div>
@@ -376,7 +506,7 @@
                 <div class="flex flex-col gap-2">
                     <div class="font-syne font-medium text-[48px] leading-[1.4] text-theme-heading">Clear</div>
                     <div class="tile-paragraph font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+                        Some things don’t change, design isn’t about making things pretty. It’s about building clarity.
                     </div>
                 </div>
             </div>
