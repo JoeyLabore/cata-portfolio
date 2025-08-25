@@ -36,7 +36,74 @@
             }
         }
     </script>
+
+    
     <style>
+        /* Thumbnails: show videos by default on tablet/mobile */
+        @media (max-width: 1200px) {
+            /* Reveal the <video> overlay */
+            .case-study-card video {
+                opacity: 1 !important;
+            }
+            /* Hide the static background image underneath */
+            .case-study-card .absolute.bg-cover {
+                opacity: 0 !important;
+            }
+        }
+
+        /* Full-screen menu overlay */
+        .menu-overlay {
+            position: fixed;
+            top: 82px; /* keep header visible */
+            left: 0; right: 0; bottom: 0;
+            background: var(--surface-primary);
+            z-index: 100;
+            display: flex; /* keep in flow for transitions */
+            align-items: flex-start; /* align to top */
+            justify-content: flex-start; /* start at top-left */
+            border-top: 1px solid var(--stroke-border); /* border below header */
+            /* Animation base */
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: opacity 200ms ease, transform 200ms ease;
+            pointer-events: none;
+        }
+        .menu-overlay.open { 
+            opacity: 1; 
+            transform: none; 
+            pointer-events: auto;
+        }
+        .menu-overlay .overlay-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0; /* no vertical gap, borders divide items */
+            width: 100%;
+            max-width: none; /* full width */
+            padding: 0; /* borders reach edges */
+            /* Staggered content entrance */
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 220ms ease 60ms, transform 220ms ease 60ms;
+        }
+        .menu-overlay.open .overlay-content { opacity: 1; transform: none; }
+        .menu-overlay a {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            height: 80px;
+            padding: 0 16px; /* 16px gutters */
+            border-bottom: 1px solid var(--stroke-border);
+        }
+        .menu-overlay a:last-child { border-bottom: 0; }
+        /* On mobile, keep the bottom border on the last item */
+        @media (max-width: 600px) {
+            .menu-overlay a:last-child { border-bottom: 1px solid var(--stroke-border); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .menu-overlay { transition: none; }
+            .menu-overlay .overlay-content { transition: none; }
+        }
+        /* removed overlay title */
         /* Case studies section spacing */
         /* 48px from 03 section above and 48px from cards below */
         #case-studies { padding-top: 48px; padding-bottom: 64px; }
@@ -278,7 +345,7 @@
             overflow: hidden;
         }
 
-        @media (min-width: 601px) {
+        @media (min-width: 1201px) {
             .tile:hover .tile-paragraph {
                 opacity: 1;
                 max-height: 200px;
@@ -326,22 +393,64 @@
         }
 
         @media (max-width: 600px) {
-            .desktop-menu {
-                display: none !important;
-            }
-            .mobile-menu {
-                display: flex !important;
-                /* 16px gutters in mobile nav */
-                padding-left: 16px !important;
-                padding-right: 0px !important;
-            }
+            /* Show mobile nav, hide desktop nav */
+            .desktop-menu { display: none !important; }
+            .mobile-menu { display: flex !important; padding-left: 16px !important; padding-right: 0 !important; }
 
-            /* Case study card: mobile vertical layout */
-            .case-study-card {
-                flex-direction: column !important;
-                gap: 0 !important;
-                height: auto !important;
-            }
+    /* Case study card: mobile vertical layout */
+    .case-study-card {
+        flex-direction: column !important;
+        gap: 0 !important;
+        height: auto !important;
+    }
+    /* Hero tiles: force full-width to avoid overflow from min-w-[350px] */
+    .tile {
+        min-width: 100% !important;
+        width: 100% !important;
+        height: 300px !important;
+        border-bottom: 1px solid var(--stroke-border) !important; /* visual divider */
+    }
+    .tile:last-child { border-bottom: 0 !important; }
+    /* Tile number size */
+    .tile > div:first-child {
+        font-size: 48px !important;
+        line-height: 1.4 !important;
+    }
+    /* Tile heading size (Fast, Focused, Clear) */
+    .tile > div:nth-child(2) > div:first-child {
+        font-size: 32px !important;
+        line-height: 1.4 !important;
+    }
+    /* Hint animation for collapsed tiles: same 2s interval, slower motion */
+    @keyframes tileHintBounce {
+        0%, 90%, 100% { transform: translateY(0); }
+        93% { transform: translateY(-6px); }
+        96% { transform: translateY(-10px); }
+        98% { transform: translateY(-3px); }
+    }
+    .tile[aria-expanded="false"] > div:nth-child(2) > div:first-child {
+        animation: tileHintBounce 3s cubic-bezier(.39, .575, .565, 1) infinite; /* gentle ease */
+        will-change: transform;
+    }
+    /* Collapsible paragraph in tiles */
+    .tile { cursor: pointer; }
+    .tile .tile-paragraph {
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        transition: max-height 250ms ease, opacity 200ms ease;
+    }
+    .scroll-text { -webkit-tap-highlight-color: transparent; }
+    /* Remove 1px flex gap that shows as a right stripe on small screens */
+    section.bg-theme-inverse {
+        gap: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    /* Ensure card wrappers span full width on mobile */
+    .w-full.max-w-\[792px\] { max-width: 100% !important; }
+    .self-end { align-self: stretch !important; }
+            
             /* Hero tiles: force full-width to avoid overflow from min-w-[350px] */
             .tile {
                 min-width: 100% !important;
@@ -482,7 +591,7 @@
         <!-- Navigation -->
         <!-- Desktop Navigation -->
         <nav class="desktop-menu bg-theme-primary h-[82px] flex items-center justify-between pl-8 animate-slide-up nav-animation">
-            <div class="font-syne font-medium text-[16px] leading-[1.6] text-theme-heading">Laura Ledesna</div>
+            <a href="index.html" class="font-syne font-medium text-[16px] leading-[1.6] text-theme-heading">Laura Ledesna</a>
             <div class="flex h-full">
                 <a href="mailto:iamlauraledesna@gmail.com" class="menu-item h-[82px] w-[167px] flex items-center px-4 border-l border-theme">
                     <span class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Email</span>
@@ -495,15 +604,36 @@
 
         <!-- Mobile Navigation -->
         <nav class="mobile-menu bg-theme-primary h-[82px] flex items-center justify-between pl-4 pr-0 animate-slide-up nav-animation">
-            <div class="font-syne font-medium text-[16px] leading-[1.6] text-theme-heading whitespace-pre">Laura Ledesna</div>
-            <div class="bg-theme-primary flex items-center justify-center size-[82px] relative shrink-0 border-l border-theme">
+            <a href="index.html" class="font-syne font-medium text-[16px] leading-[1.6] text-theme-heading whitespace-pre">Laura Ledesna</a>
+            <button id="mobile-menu-toggle" class="bg-theme-primary flex items-center justify-center size-[82px] relative shrink-0 border-l border-theme" aria-expanded="false" aria-controls="menu-overlay" aria-label="Open menu">
                 <div class="relative shrink-0 size-8">
-                    <div class="absolute inset-[12.5%]">
+                    <div class="absolute inset-[12.5%] icon-menu">
                         <img src="assets/List.svg" alt="Menu" class="block max-w-none size-full icon-theme">
                     </div>
+                    <div class="absolute inset-[12.5%] icon-close" style="display:none;">
+                        <svg viewBox="0 0 256 256" class="block max-w-none size-full icon-theme" aria-hidden="true" focusable="false">
+                            <line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="56" y1="56" x2="200" y2="200" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
                 </div>
-            </div>
+            </button>
         </nav>
+
+        <!-- Full-screen Menu Overlay -->
+        <div id="menu-overlay" class="menu-overlay" aria-hidden="true">
+            <div class="overlay-content">
+                <a href="index.html" class="menu-item">
+                    <span class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Home</span>
+                </a>
+                <a href="mailto:iamlauraledesna@gmail.com" class="menu-item">
+                    <span class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Email</span>
+                </a>
+                <a href="assets/cv-laura-ledesna.pdf" download target="_blank" class="menu-item">
+                    <span class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Resume</span>
+                </a>
+            </div>
+        </div>
 
         <!-- Hero Section -->
         <section class="bg-theme-inverse flex flex-wrap gap-[1px] w-full">
@@ -717,7 +847,7 @@
     <script>
     // Collapse/expand tile description paragraphs below 600px
     (function () {
-      const mql = window.matchMedia('(max-width: 600px)');
+      const mql = window.matchMedia('(max-width: 1200px)');
       const tiles = Array.from(document.querySelectorAll('.tile'));
 
       function applyClosed(p) {
@@ -827,6 +957,84 @@
           window.scrollTo(0, 0);
         }
       });
+    </script>
+    <script>
+      // Mobile full-screen overlay menu (active only when <=600px)
+      (function(){
+        const toggle = document.getElementById('mobile-menu-toggle');
+        const overlay = document.getElementById('menu-overlay');
+        if (!toggle || !overlay) return;
+        const mql = window.matchMedia('(max-width: 600px)');
+
+        let __overlayScrollY = 0;
+        function lockScroll(){
+          __overlayScrollY = window.scrollY || window.pageYOffset || 0;
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.position = 'fixed';
+          document.body.style.top = `-${__overlayScrollY}px`;
+          document.body.style.left = '0';
+          document.body.style.right = '0';
+          document.body.style.width = '100%';
+        }
+        function unlockScroll(){
+          document.documentElement.style.overflow = '';
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.style.left = '';
+          document.body.style.right = '';
+          document.body.style.width = '';
+          window.scrollTo(0, __overlayScrollY || 0);
+        }
+
+        function openOverlay(){
+          overlay.classList.add('open');
+          overlay.setAttribute('aria-hidden','false');
+          toggle.setAttribute('aria-expanded','true');
+          document.addEventListener('click', onDoc, true);
+          document.addEventListener('keydown', onKey, true);
+          lockScroll();
+          // swap icons and label
+          const menuIco = toggle.querySelector('.icon-menu');
+          const closeIco = toggle.querySelector('.icon-close');
+          if (menuIco) menuIco.style.display = 'none';
+          if (closeIco) closeIco.style.display = 'block';
+          toggle.setAttribute('aria-label','Close menu');
+        }
+        function closeOverlay(){
+          overlay.classList.remove('open');
+          overlay.setAttribute('aria-hidden','true');
+          toggle.setAttribute('aria-expanded','false');
+          document.removeEventListener('click', onDoc, true);
+          document.removeEventListener('keydown', onKey, true);
+          unlockScroll();
+          // swap icons and label back
+          const menuIco = toggle.querySelector('.icon-menu');
+          const closeIco = toggle.querySelector('.icon-close');
+          if (menuIco) menuIco.style.display = 'block';
+          if (closeIco) closeIco.style.display = 'none';
+          toggle.setAttribute('aria-label','Open menu');
+        }
+        function onToggle(e){
+          e.stopPropagation();
+          if (!mql.matches) return;
+          const open = overlay.classList.contains('open');
+          open ? closeOverlay() : openOverlay();
+        }
+        function onDoc(e){
+          // Close if clicking outside inner content (background tap)
+          const content = overlay.querySelector('.overlay-content');
+          if (!content.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) {
+            closeOverlay();
+          }
+        }
+        function onKey(e){ if (e.key === 'Escape') closeOverlay(); }
+        function handle(){ closeOverlay(); if (mql.matches){ toggle.addEventListener('click', onToggle); } else { toggle.removeEventListener('click', onToggle); } }
+
+        handle();
+        mql.addEventListener('change', handle);
+        // Close overlay on navigation clicks
+        overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeOverlay));
+      })();
     </script>
   </body>
 </html>

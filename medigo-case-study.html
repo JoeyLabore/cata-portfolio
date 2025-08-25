@@ -43,6 +43,61 @@
             padding: 0;
         }
 
+        /* Full-screen menu overlay */
+        .menu-overlay {
+            position: fixed;
+            top: 82px; /* keep header visible */
+            left: 0; right: 0; bottom: 0;
+            background: var(--surface-primary);
+            z-index: 100;
+            display: flex; /* keep in flow for transitions */
+            align-items: flex-start; /* align to top */
+            justify-content: flex-start; /* start at top-left */
+            border-top: 1px solid var(--stroke-border); /* border below header */
+            /* Animation base */
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: opacity 200ms ease, transform 200ms ease;
+            pointer-events: none;
+        }
+        .menu-overlay.open { 
+            display: flex; 
+            opacity: 1; 
+            transform: none; 
+            pointer-events: auto;
+        }
+        .menu-overlay .overlay-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0; /* borders divide items */
+            width: 100%;
+            max-width: none; /* full width */
+            padding: 0; /* edge-to-edge */
+            /* Staggered content entrance */
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 220ms ease 60ms, transform 220ms ease 60ms;
+        }
+        .menu-overlay.open .overlay-content { opacity: 1; transform: none; }
+        .menu-overlay a {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            height: 80px;
+            padding: 0 16px; /* 16px gutters */
+            border-bottom: 1px solid var(--stroke-border);
+        }
+        .menu-overlay a:last-child { border-bottom: 0; }
+        /* On mobile, keep the bottom border on the last item */
+        @media (max-width: 600px) {
+            .menu-overlay a:last-child { border-bottom: 1px solid var(--stroke-border); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .menu-overlay { transition: none; }
+            .menu-overlay .overlay-content { transition: none; }
+        }
+        /* removed overlay title */
+
         /* Theme Variables */
         .light {
             --surface-primary: #ffffff;
@@ -151,7 +206,41 @@
             }
             .mobile-menu {
                 display: flex !important;
+                padding-left: 16px !important;
+                padding-right: 0 !important; /* remove right padding */
             }
+            /* Case study card: mobile vertical layout */
+            .case-study-card {
+                flex-direction: column !important;
+                gap: 0 !important;
+                height: auto !important;
+            }
+            .case-study-card > div:first-child {
+                position: relative !important;
+                width: 100% !important;
+                height: 200px !important;
+                flex: none !important;
+            }
+            .case-study-card > div:first-child > .absolute { inset: 0 !important; }
+            .case-study-card > div:last-child { width: 100% !important; padding-top: 16px !important; }
+            /* 16px spacing between industry, title, and icon */
+            .case-study-card > div:last-child {
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: flex-start !important;
+                row-gap: 16px !important;
+            }
+            /* Title size for mobile card */
+            .case-study-card > div:last-child > div:nth-child(2) {
+                font-size: 20px !important;
+                line-height: 1.4 !important;
+            }
+            /* Global overrides to 16px gutters */
+            .px-8 { padding-left: 16px !important; padding-right: 16px !important; }
+            .p-8 { padding-left: 16px !important; padding-right: 16px !important; }
+            .pl-8 { padding-left: 16px !important; }
+            .pr-8 { padding-right: 16px !important; }
+            .case-study-content { padding: 16px !important; }
         }
 
         /* Case Study Specific Styles */
@@ -166,6 +255,25 @@
         .case-study-content {
             width: 100%;
             padding: 32px;
+        }
+        
+        /* Global horizontal spacing rules for <= 750px */
+        @media (max-width: 750px) {
+            .px-8 {
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+            }
+            .p-8 {
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+            }
+            .pl-8 { padding-left: 24px !important; }
+            .pr-8 { padding-right: 24px !important; }
+            .case-study-content { padding: 24px !important; }
+            /* Footer adjustments */
+            footer .scroll-button { display: none !important; }
+            .theme-toggle .theme-text { display: none !important; }
+            .theme-toggle { gap: 0 !important; }
         }
 
         /* Button States */
@@ -276,7 +384,7 @@
     <div class="min-h-screen bg-theme-inverse p-[1px] flex flex-col gap-[1px] mx-auto" style="max-width: 1536px;">
         <!-- Navigation -->
         <nav class="desktop-menu bg-theme-primary h-[82px] flex items-center justify-between pl-8 animate-slide-up nav-animation">
-            <a href="index.html" class="font-syne font-medium text-[16px] leading-[1.6] text-theme-heading hover:opacity-80 transition-opacity">Laura Ledesna</a>
+            <a href="index.html" class="font-syne font-medium text-[16px] leading-[1.6] text-theme-heading">Laura Ledesna</a>
             <div class="flex h-full">
                 <a href="mailto:iamlauraledesna@gmail.com" class="menu-item h-[82px] w-[167px] flex items-center px-4 border-l border-theme">
                     <span class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Email</span>
@@ -289,15 +397,36 @@
 
         <!-- Mobile Navigation -->
         <nav class="mobile-menu bg-theme-primary h-[82px] flex items-center justify-between pl-4 pr-0 animate-slide-up nav-animation">
-            <a href="index.html" class="font-syne font-medium text-[16px] leading-[1.6] text-theme-heading whitespace-pre hover:opacity-80 transition-opacity">Laura Ledesna</a>
-            <div class="bg-theme-primary flex items-center justify-center size-[82px] relative shrink-0 border-l border-theme">
+            <a href="index.html" class="font-syne font-medium text-[16px] leading-[1.6] text-theme-heading whitespace-pre">Laura Ledesna</a>
+            <button id="mobile-menu-toggle" class="bg-theme-primary flex items-center justify-center size-[82px] relative shrink-0 border-l border-theme" aria-expanded="false" aria-controls="menu-overlay" aria-label="Open menu">
                 <div class="relative shrink-0 size-8">
-                    <div class="absolute inset-[12.5%]">
+                    <div class="absolute inset-[12.5%] icon-menu">
                         <img src="assets/List.svg" alt="Menu" class="block max-w-none size-full icon-theme">
                     </div>
+                    <div class="absolute inset-[12.5%] icon-close" style="display:none;">
+                        <svg viewBox="0 0 256 256" class="block max-w-none size-full icon-theme" aria-hidden="true" focusable="false">
+                            <line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="56" y1="56" x2="200" y2="200" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
                 </div>
-            </div>
+            </button>
         </nav>
+
+        <!-- Full-screen Menu Overlay -->
+        <div id="menu-overlay" class="menu-overlay" aria-hidden="true">
+            <div class="overlay-content">
+                <a href="index.html" class="menu-item">
+                    <span class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Home</span>
+                </a>
+                <a href="mailto:iamlauraledesna@gmail.com" class="menu-item">
+                    <span class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Email</span>
+                </a>
+                <a href="assets/cv-laura-ledesna.pdf" download target="_blank" class="menu-item">
+                    <span class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Resume</span>
+                </a>
+            </div>
+        </div>
 
         <!-- Case Study Content -->
         <div class="bg-theme-primary case-study-content animate-slide-up" style="animation-delay: 0.2s;">
@@ -785,9 +914,82 @@
             const html = document.documentElement;
             const newTheme = html.classList.contains('light') ? 'dark' : 'light';
             setTheme(newTheme);
-            
             return false;
         });
     </script>
-</body>
-</html> 
+
+    <!-- Overlay toggle script -->
+    <script>
+      // Mobile full-screen overlay menu (active only when <=600px)
+      (function(){
+        const toggle = document.getElementById('mobile-menu-toggle');
+        const overlay = document.getElementById('menu-overlay');
+        if (!toggle || !overlay) return;
+        const mql = window.matchMedia('(max-width: 600px)');
+
+        let __overlayScrollY = 0;
+        function lockScroll(){
+          __overlayScrollY = window.scrollY || window.pageYOffset || 0;
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.position = 'fixed';
+          document.body.style.top = `-${__overlayScrollY}px`;
+          document.body.style.left = '0';
+          document.body.style.right = '0';
+          document.body.style.width = '100%';
+        }
+        function unlockScroll(){
+          document.documentElement.style.overflow = '';
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.style.left = '';
+          document.body.style.right = '';
+          document.body.style.width = '';
+          window.scrollTo(0, __overlayScrollY || 0);
+        }
+
+        function openOverlay(){
+          overlay.classList.add('open');
+          overlay.setAttribute('aria-hidden','false');
+          toggle.setAttribute('aria-expanded','true');
+          document.addEventListener('click', onDoc, true);
+          document.addEventListener('keydown', onKey, true);
+          lockScroll();
+          const menuIco = toggle.querySelector('.icon-menu');
+          const closeIco = toggle.querySelector('.icon-close');
+          if (menuIco) menuIco.style.display = 'none';
+          if (closeIco) closeIco.style.display = 'block';
+          toggle.setAttribute('aria-label','Close menu');
+        }
+        function closeOverlay(){
+          overlay.classList.remove('open');
+          overlay.setAttribute('aria-hidden','true');
+          toggle.setAttribute('aria-expanded','false');
+          document.removeEventListener('click', onDoc, true);
+          document.removeEventListener('keydown', onKey, true);
+          unlockScroll();
+          const menuIco = toggle.querySelector('.icon-menu');
+          const closeIco = toggle.querySelector('.icon-close');
+          if (menuIco) menuIco.style.display = 'block';
+          if (closeIco) closeIco.style.display = 'none';
+          toggle.setAttribute('aria-label','Open menu');
+        }
+        function onToggle(e){
+          e.stopPropagation();
+          if (!mql.matches) return;
+          const open = overlay.classList.contains('open');
+          open ? closeOverlay() : openOverlay();
+        }
+        function onDoc(e){
+          const content = overlay.querySelector('.overlay-content');
+          if (!content.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) closeOverlay();
+        }
+        function onKey(e){ if (e.key === 'Escape') closeOverlay(); }
+        function handle(){ closeOverlay(); if (mql.matches){ toggle.addEventListener('click', onToggle); } else { toggle.removeEventListener('click', onToggle); } }
+
+        handle();
+        mql.addEventListener('change', handle);
+        overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeOverlay));
+      })();
+    </script>
+  </body>
+</html>
