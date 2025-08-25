@@ -139,8 +139,10 @@
             border-color: var(--stroke-border);
         }
 
-        .case-study-card:hover {
-            background-color: var(--surface-secondary);
+        @media (min-width: 601px) {
+            .case-study-card:hover {
+                background-color: var(--surface-secondary);
+            }
         }
 
         .case-study-card:active {
@@ -276,9 +278,11 @@
             overflow: hidden;
         }
 
-        .tile:hover .tile-paragraph {
-            opacity: 1;
-            max-height: 200px;
+        @media (min-width: 601px) {
+            .tile:hover .tile-paragraph {
+                opacity: 1;
+                max-height: 200px;
+            }
         }
 
         /* Smooth Scroll Behavior */
@@ -372,7 +376,8 @@
             .tile .tile-paragraph {
                 overflow: hidden;
                 max-height: 0;
-                transition: max-height 250ms ease;
+                opacity: 0;
+                transition: max-height 250ms ease, opacity 200ms ease;
             }
             .scroll-text { -webkit-tap-highlight-color: transparent; }
             /* Remove 1px flex gap that shows as a right stripe on small screens */
@@ -719,15 +724,18 @@
         if (!p) return;
         p.style.overflow = 'hidden';
         p.style.maxHeight = '0px';
-        p.style.transition = 'max-height 250ms ease';
+        p.style.opacity = '0';
+        p.style.transition = 'max-height 250ms ease, opacity 200ms ease';
       }
 
       function openPara(p) {
         p.style.maxHeight = p.scrollHeight + 'px';
+        p.style.opacity = '1';
       }
 
       function closePara(p) {
         p.style.maxHeight = '0px';
+        p.style.opacity = '0';
       }
 
       function toggle(e) {
@@ -783,6 +791,7 @@
             p.style.overflow = '';
             p.style.maxHeight = '';
             p.style.transition = '';
+            p.style.opacity = '';
           }
           tile.style.cursor = '';
           tile.removeAttribute('role');
