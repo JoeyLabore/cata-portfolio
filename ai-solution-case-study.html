@@ -89,6 +89,10 @@
         .menu-overlay a:last-child { border-bottom: 0; }
         /* On mobile, keep the bottom border on the last item */
         @media (max-width: 600px) {
+            .menu-overlay a {
+                border-left: 1px solid var(--stroke-border);
+                border-right: 1px solid var(--stroke-border);
+            }
             .menu-overlay a:last-child { border-bottom: 1px solid var(--stroke-border); }
         }
         /* On mobile, keep the bottom border on the last item */
@@ -199,6 +203,39 @@
         }
 
         /* Navigation Responsive Styles */
+        /* Keep header visible on scroll (fixed like home page) */
+        .desktop-menu,
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+        }
+        /* No bottom border by default; add when scrolled */
+        .desktop-menu,
+        .desktop-menu .menu-item,
+        .mobile-menu,
+        #mobile-menu-toggle {
+            border-bottom: 0;
+        }
+        .header-with-border .desktop-menu,
+        .header-with-border .desktop-menu .menu-item,
+        .header-with-border .mobile-menu,
+        .header-with-border #mobile-menu-toggle {
+            border-bottom: 1px solid var(--stroke-border);
+        }
+        /* Prevent border appearance from animating */
+        .desktop-menu, .desktop-menu .menu-item, .mobile-menu, #mobile-menu-toggle {
+            transition: none !important;
+        }
+        /* Remove 1px gap between nav and top content */
+        .min-h-screen > .desktop-menu,
+        .min-h-screen > .mobile-menu { margin-bottom: -1px; }
+        /* Always show divider under nav on case study pages */
+        .desktop-menu, .mobile-menu, #mobile-menu-toggle, .desktop-menu .menu-item {
+            border-bottom: 1px solid var(--stroke-border) !important;
+        }
         .mobile-menu {
             display: none !important;
         }
@@ -217,6 +254,7 @@
                 flex-direction: column !important;
                 gap: 0 !important;
                 height: auto !important;
+                padding: 12px !important; /* override p-2 (8px) on mobile */
             }
             .case-study-card > div:first-child {
                 position: relative !important;
@@ -433,7 +471,7 @@
         </div>
 
         <!-- Case Study Content -->
-        <div class="bg-theme-primary case-study-content animate-slide-up" style="animation-delay: 0.2s;">
+        <div class="bg-theme-primary case-study-content animate-slide-up" style="animation-delay: 0.2s; padding-top: 104px !important;">
             <video class="case-study-hero w-full h-full object-cover" autoplay muted loop playsinline>
                 <source src="assets/ai-solution-case-study/media-3.mp4" type="video/mp4">
             </video>
@@ -901,6 +939,21 @@
         });
     </script>
 
+    <script>
+      // Add bottom border to header and menu items only after scrolling
+      (function(){
+        function applyHeaderBorder(){
+          if (window.scrollY > 0) {
+            document.body.classList.add('header-with-border');
+          } else {
+            document.body.classList.remove('header-with-border');
+          }
+        }
+        applyHeaderBorder();
+        window.addEventListener('scroll', applyHeaderBorder, {passive: true});
+      })();
+    </script>
+
     <!-- Overlay toggle script -->
     <script>
       // Mobile full-screen overlay menu (active only when <=600px)
@@ -937,6 +990,8 @@
           document.addEventListener('click', onDoc, true);
           document.addEventListener('keydown', onKey, true);
           lockScroll();
+          // Force header bottom border while menu is open
+          document.body.classList.add('header-with-border');
           const menuIco = toggle.querySelector('.icon-menu');
           const closeIco = toggle.querySelector('.icon-close');
           if (menuIco) menuIco.style.display = 'none';
@@ -950,6 +1005,10 @@
           document.removeEventListener('click', onDoc, true);
           document.removeEventListener('keydown', onKey, true);
           unlockScroll();
+          // Restore header border state after closing
+          if (window.scrollY <= 0) {
+            document.body.classList.remove('header-with-border');
+          }
           const menuIco = toggle.querySelector('.icon-menu');
           const closeIco = toggle.querySelector('.icon-close');
           if (menuIco) menuIco.style.display = 'block';

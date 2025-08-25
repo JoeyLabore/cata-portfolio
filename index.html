@@ -392,6 +392,36 @@
         }
 
         /* Navigation Responsive Styles */
+        /* Keep header visible on scroll (fixed on home page) */
+        .desktop-menu,
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+        }
+        /* No bottom border by default; add when scrolled */
+        .desktop-menu,
+        .desktop-menu .menu-item,
+        .mobile-menu,
+        #mobile-menu-toggle {
+            border-bottom: 0;
+        }
+        .header-with-border .desktop-menu,
+        .header-with-border .desktop-menu .menu-item,
+        .header-with-border .mobile-menu,
+        .header-with-border #mobile-menu-toggle {
+            border-bottom: 1px solid var(--stroke-border);
+        }
+        /* Always show divider under nav on home page */
+        .desktop-menu, .mobile-menu, #mobile-menu-toggle, .desktop-menu .menu-item {
+            border-bottom: 1px solid var(--stroke-border) !important;
+        }
+        /* Prevent border appearance from animating */
+        .desktop-menu, .desktop-menu .menu-item, .mobile-menu, #mobile-menu-toggle {
+            transition: none !important;
+        }
         .mobile-menu {
             display: none !important;
         }
@@ -623,7 +653,7 @@
                 </div>
             </button>
         </nav>
-
+        
         <!-- Full-screen Menu Overlay -->
         <div id="menu-overlay" class="menu-overlay" aria-hidden="true">
             <div class="overlay-content">
@@ -640,7 +670,7 @@
         </div>
 
         <!-- Hero Section -->
-        <section class="bg-theme-inverse flex flex-wrap gap-[1px] w-full">
+        <section class="bg-theme-inverse flex flex-wrap gap-[1px] w-full" style="padding-top: 80px !important;">
             <div class="tile bg-theme-primary flex flex-col justify-between basis-0 grow min-w-[350px] h-[400px] px-8 py-6 animate-slide-up tile-1">
                 <div class="font-inter font-semibold text-[64px] leading-[1.4] text-theme-heading">01</div>
                 <div class="flex flex-col gap-2">
@@ -962,7 +992,23 @@
         }
       });
     </script>
-    <script>
+
+  <script>
+  // Add bottom border to header only after scrolling
+  (function(){
+    function applyHeaderBorder(){
+      if (window.scrollY > 0) {
+        document.body.classList.add('header-with-border');
+      } else {
+        document.body.classList.remove('header-with-border');
+      }
+    }
+    applyHeaderBorder();
+    window.addEventListener('scroll', applyHeaderBorder, {passive: true});
+  })();
+  </script>
+
+  <script>
       // Mobile full-screen overlay menu (active only when <=600px)
       (function(){
         const toggle = document.getElementById('mobile-menu-toggle');
@@ -997,7 +1043,8 @@
           document.addEventListener('click', onDoc, true);
           document.addEventListener('keydown', onKey, true);
           lockScroll();
-          // swap icons and label
+          // Force header bottom border while menu is open
+          document.body.classList.add('header-with-border');
           const menuIco = toggle.querySelector('.icon-menu');
           const closeIco = toggle.querySelector('.icon-close');
           if (menuIco) menuIco.style.display = 'none';
@@ -1011,7 +1058,10 @@
           document.removeEventListener('click', onDoc, true);
           document.removeEventListener('keydown', onKey, true);
           unlockScroll();
-          // swap icons and label back
+          // Restore header border state after closing
+          if (window.scrollY <= 0) {
+            document.body.classList.remove('header-with-border');
+          }
           const menuIco = toggle.querySelector('.icon-menu');
           const closeIco = toggle.querySelector('.icon-close');
           if (menuIco) menuIco.style.display = 'block';
