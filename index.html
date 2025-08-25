@@ -739,6 +739,17 @@
           closePara(p);
           tile.setAttribute('aria-expanded', 'false');
         } else {
+          // Close all other tiles first
+          tiles.forEach((other) => {
+            if (other !== tile) {
+              const op = other.querySelector('.tile-paragraph');
+              if (op && op.style.maxHeight && op.style.maxHeight !== '0px') {
+                closePara(op);
+                other.setAttribute('aria-expanded', 'false');
+              }
+            }
+          });
+          // Now open the requested tile
           openPara(p);
           tile.setAttribute('aria-expanded', 'true');
         }
@@ -790,5 +801,23 @@
       mql.addEventListener('change', handle);
     })();
     </script>
-</body>
+
+    <script>
+      window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+      }
+      // Also handle normal loads and bfcache restores
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.addEventListener('load', function () {
+        window.scrollTo(0, 0);
+      });
+      window.addEventListener('pageshow', function (e) {
+        if (e.persisted) {
+          window.scrollTo(0, 0);
+        }
+      });
+    </script>
+  </body>
 </html>
