@@ -87,6 +87,8 @@
             border-bottom: 1px solid var(--stroke-border);
         }
         .menu-overlay a:last-child { border-bottom: 0; }
+        /* FAB hidden by default; enabled in mobile media query */
+        .fab-top { display: none; }
         /* On mobile, keep the bottom border on the last item */
         @media (max-width: 600px) {
             .menu-overlay a {
@@ -94,10 +96,25 @@
                 border-right: 1px solid var(--stroke-border);
             }
             .menu-overlay a:last-child { border-bottom: 1px solid var(--stroke-border); }
-        }
-        /* On mobile, keep the bottom border on the last item */
-        @media (max-width: 600px) {
-            .menu-overlay a:last-child { border-bottom: 1px solid var(--stroke-border); }
+            /* Floating action button (Back to top) */
+            .fab-top {
+                position: fixed;
+                right: 16px;
+                bottom: 16px;
+                width: 48px;
+                height: 48px;
+                border-radius: 0; /* square */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: var(--surface-primary);
+                color: var(--typography-heading);
+                border: 1px solid var(--stroke-border);
+                z-index: 90; /* below overlay (100) */
+            }
+            .fab-top img { width: 24px; height: 24px; }
+            /* Dark mode: make arrow white */
+            .dark .fab-top img { filter: invert(1); }
         }
         @media (prefers-reduced-motion: reduce) {
             .menu-overlay { transition: none; }
@@ -404,6 +421,11 @@
             </div>
         </nav>
 
+        <!-- Mobile FAB: Back to Top -->
+        <button id="fab-top" class="fab-top" aria-label="Back to top" title="Back to top">
+            <img src="assets/ArrowUp.svg" alt="Back to top">
+        </button>
+
         <!-- Mobile Navigation -->
         <nav class="mobile-menu bg-theme-primary h-[82px] flex items-center justify-between pl-4 pr-0 animate-slide-up nav-animation">
             <a href="index.html" class="font-syne font-medium text-[16px] leading-[1.6] text-theme-heading whitespace-pre">Laura Ledesna</a>
@@ -446,11 +468,14 @@
                 <div class="flex flex-row gap-6 mt-8 animate-slide-up" style="animation-delay: 0.4s;">
                     <div class="basis-0 grow">
                         <h1 class="font-syne font-medium text-[32px] leading-[1.4] text-theme-heading">
-                            How I Designed An AI UX Assistant That Knows What You Need, Before You Ask</h1>
+                            How I Designed An AI UX Assistant That Knows What You Need, Before You Ask
+                        </h1>
                     </div>
                     <div class="basis-0 grow">
                         <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
-                            NUVUN is a lean, AI-powered, Zero UI research and design assistant built to anticipate needs, connect insights across projects, and orchestrate tools in real time.It works across voice, text, image, and video, and delivers actionable outputs directly where teams work,  without adding new platforms or learning curves.</div>
+                            NUVUN is a lean, AI-powered, Zero UI research and design assistant built to anticipate needs, connect insights across projects, and orchestrate tools in real time. It works across voice, text, image, and video, and delivers actionable outputs directly where teams work, without adding new platforms or learning curves.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -979,5 +1004,16 @@
         overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeOverlay));
       })();
     </script>
-</body>
-</html>
+
+    <script>
+      // FAB scroll-to-top
+      (function(){
+        const fab = document.getElementById('fab-top');
+        if (!fab) return;
+        fab.addEventListener('click', function(){
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
+  </body>
+  </html>

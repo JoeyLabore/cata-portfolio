@@ -396,6 +396,12 @@
             display: none !important;
         }
 
+        /* Disable jump animation on tile headings (Fast / Focused / Clear) */
+        .tile[aria-expanded="false"] > div:nth-child(2) > div:first-child {
+            animation: none !important;
+            will-change: auto !important;
+        }
+
         @media (max-width: 600px) {
             /* Show mobile nav, hide desktop nav */
             .desktop-menu { display: none !important; }
