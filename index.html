@@ -402,6 +402,7 @@
         flex-direction: column !important;
         gap: 0 !important;
         height: auto !important;
+        padding: 12px !important; /* override p-2 (8px) on mobile */
     }
     /* Hero tiles: force full-width to avoid overflow from min-w-[350px] */
     .tile {
@@ -581,8 +582,7 @@
             .theme-toggle .theme-text { display: none !important; }
             .theme-toggle { gap: 0 !important; }
 
-            /* Remove wrapper horizontal padding (p-[1px]) to avoid extra stripe */
-            .min-h-screen { padding-left: 0 !important; padding-right: 0 !important; }
+            /* Keep wrapper 1px padding on mobile to preserve outer border */
         }
     </style>
 </head>
