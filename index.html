@@ -356,6 +356,25 @@
                 font-size: 32px !important;
                 line-height: 1.4 !important;
             }
+            /* Hint animation for collapsed tiles: same 2s interval, slower motion */
+            @keyframes tileHintBounce {
+                0%, 90%, 100% { transform: translateY(0); }
+                93% { transform: translateY(-6px); }
+                96% { transform: translateY(-10px); }
+                98% { transform: translateY(-3px); }
+            }
+            .tile[aria-expanded="false"] > div:nth-child(2) > div:first-child {
+                animation: tileHintBounce 3s cubic-bezier(.39, .575, .565, 1) infinite; /* gentle ease */
+                will-change: transform;
+            }
+            /* Collapsible paragraph in tiles */
+            .tile { cursor: pointer; }
+            .tile .tile-paragraph {
+                overflow: hidden;
+                max-height: 0;
+                transition: max-height 250ms ease;
+            }
+            .scroll-text { -webkit-tap-highlight-color: transparent; }
             /* Remove 1px flex gap that shows as a right stripe on small screens */
             section.bg-theme-inverse {
                 gap: 0 !important;
@@ -689,5 +708,87 @@
             observer.observe(element);
         });
     </script>
+
+    <script>
+    // Collapse/expand tile description paragraphs below 600px
+    (function () {
+      const mql = window.matchMedia('(max-width: 600px)');
+      const tiles = Array.from(document.querySelectorAll('.tile'));
+
+      function applyClosed(p) {
+        if (!p) return;
+        p.style.overflow = 'hidden';
+        p.style.maxHeight = '0px';
+        p.style.transition = 'max-height 250ms ease';
+      }
+
+      function openPara(p) {
+        p.style.maxHeight = p.scrollHeight + 'px';
+      }
+
+      function closePara(p) {
+        p.style.maxHeight = '0px';
+      }
+
+      function toggle(e) {
+        const tile = e.currentTarget;
+        const p = tile.querySelector('.tile-paragraph');
+        if (!p) return;
+        const isOpen = p.style.maxHeight && p.style.maxHeight !== '0px';
+        if (isOpen) {
+          closePara(p);
+          tile.setAttribute('aria-expanded', 'false');
+        } else {
+          openPara(p);
+          tile.setAttribute('aria-expanded', 'true');
+        }
+      }
+
+      function onKey(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle(e);
+        }
+      }
+
+      function enable() {
+        tiles.forEach((tile) => {
+          const p = tile.querySelector('.tile-paragraph');
+          applyClosed(p);
+          tile.style.cursor = 'pointer';
+          tile.setAttribute('role', 'button');
+          tile.setAttribute('tabindex', '0');
+          // mark collapsed by default for hint animation
+          tile.setAttribute('aria-expanded', 'false');
+          tile.addEventListener('click', toggle);
+          tile.addEventListener('keydown', onKey);
+        });
+      }
+
+      function disable() {
+        tiles.forEach((tile) => {
+          const p = tile.querySelector('.tile-paragraph');
+          if (p) {
+            p.style.overflow = '';
+            p.style.maxHeight = '';
+            p.style.transition = '';
+          }
+          tile.style.cursor = '';
+          tile.removeAttribute('role');
+          tile.removeAttribute('tabindex');
+          tile.removeAttribute('aria-expanded');
+          tile.removeEventListener('click', toggle);
+          tile.removeEventListener('keydown', onKey);
+        });
+      }
+
+      function handle(e) {
+        if (e.matches) enable(); else disable();
+      }
+
+      handle(mql);
+      mql.addEventListener('change', handle);
+    })();
+    </script>
 </body>
-</html> 
+</html>
