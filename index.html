@@ -97,6 +97,10 @@
         .menu-overlay a:last-child { border-bottom: 0; }
         /* On mobile, keep the bottom border on the last item */
         @media (max-width: 600px) {
+            .menu-overlay a {
+                border-left: 1px solid var(--stroke-border);
+                border-right: 1px solid var(--stroke-border);
+            }
             .menu-overlay a:last-child { border-bottom: 1px solid var(--stroke-border); }
         }
         @media (prefers-reduced-motion: reduce) {
