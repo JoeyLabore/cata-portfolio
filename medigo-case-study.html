@@ -283,19 +283,50 @@
             padding: 32px;
         }
         
+        /* Stack horizontal content and size tweaks for <= 900px */
+        @media (max-width: 900px) {
+            /* Convert horizontal flex rows in content areas to vertical */
+            .bg-theme-primary .flex-row { flex-direction: column !important; }
+            /* 16px gutters */
+            .px-8 { padding-left: 16px !important; padding-right: 16px !important; }
+            .p-8 { padding-left: 16px !important; padding-right: 16px !important; }
+            .pl-8 { padding-left: 16px !important; }
+            .pr-8 { padding-right: 16px !important; }
+            .case-study-content { padding-left: 16px !important; padding-right: 16px !important; }
+            /* Title sizes */
+            .text-\[32px\] { font-size: 24px !important; }
+            /* Statistics card titles and values */
+            .text-\[24px\] { font-size: 20px !important; }
+            .text-\[64px\] { font-size: 48px !important; }
+            /* Height fixes for specific rows */
+            .two-col-images { height: 600px !important; }
+            .content-image-row { height: 600px !important; }
+            /* Full-width image (media-14.png) height on mobile */
+            .full-width-image-14 { height: 400px !important; }
+            /* Next Steps section height on mobile */
+            .next-steps-row { height: 900px !important; }
+            /* Spacing adjustments */
+            .gap-6 { gap: 1rem !important; }
+            .gap-8 { gap: 3rem !important; }
+            /* Static cards adjustments */
+            .min-w-\[300px\] { min-width: 0 !important; }
+            .min-w-\[300px\].p-6 { padding: 16px !important; }
+            /* Statistics container stacks vertically */
+            .stats-grid { flex-direction: column !important; flex-wrap: nowrap !important; }
+        }
         /* Global horizontal spacing rules for <= 750px */
         @media (max-width: 750px) {
             .px-8 {
-                padding-left: 24px !important;
-                padding-right: 24px !important;
+                padding-left: 16px !important;
+                padding-right: 16px !important;
             }
             .p-8 {
-                padding-left: 24px !important;
-                padding-right: 24px !important;
+                padding-left: 16px !important;
+                padding-right: 16px !important;
             }
-            .pl-8 { padding-left: 24px !important; }
-            .pr-8 { padding-right: 24px !important; }
-            .case-study-content { padding: 24px !important; }
+            .pl-8 { padding-left: 16px !important; }
+            .pr-8 { padding-right: 16px !important; }
+            .case-study-content { padding-left: 16px !important; padding-right: 16px !important; }
             /* Footer adjustments */
             footer .scroll-button { display: none !important; }
             .theme-toggle .theme-text { display: none !important; }
@@ -404,6 +435,47 @@
         .theme-text:active::after {
             height: 4px;
         }
+        /* Footer links: mimic Back to top hover/active underline */
+        .footer-link {
+            position: relative;
+            cursor: pointer;
+            text-decoration: none !important;
+            display: inline-block;
+            align-self: flex-start;
+            width: auto;
+        }
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--typography-heading);
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+        .footer-link:hover::after { transform: scaleX(1); }
+        .footer-link:active::after { height: 4px; }
+
+        /* Footer responsive tweaks */
+        @media (max-width: 450px) {
+            .footer-buttons { flex-direction: column !important; width: 100% !important; }
+            .footer-buttons > a { width: 100% !important; text-align: center !important; }
+        }
+        @media (max-width: 900px) {
+            .footer-headline { font-size: 32px !important; }
+            footer.footer-figma { padding-top: 32px !important; padding-bottom: 32px !important; }
+            footer.footer-figma .gap-24 { gap: 3rem !important; }
+        }
+
+        /* Light mode button states */
+        .light .book-call { background: #000000 !important; color: #ffffff !important; }
+        .light .book-call:hover { background: #0d0d0d !important; }
+        .light .book-call:active { background: #1a1a1a !important; }
+        .light .message-btn { background: transparent !important; }
+        .light .message-btn:hover { background: rgba(0,0,0,0.05) !important; }
+        .light .message-btn:active { background: rgba(0,0,0,0.10) !important; }
     </style>
 </head>
 <body class="bg-theme-primary">
@@ -530,7 +602,7 @@
 
         <!-- Content Block with Image -->
         <div class="bg-theme-primary px-8 py-8 scroll-animate" data-scroll>
-            <div class="w-full mx-auto flex flex-row gap-8 h-[725px]">
+            <div class="w-full mx-auto flex flex-row gap-8 h-[725px] content-image-row">
                 <!-- Text Content -->
                 <div class="basis-0 grow flex flex-col justify-flex-start">
                     <div class="flex flex-row gap-6">
@@ -587,7 +659,7 @@
 
         <!-- Two Column Image Block -->
         <div class="bg-theme-primary p-8 scroll-animate" data-scroll>
-            <div class="w-full flex flex-row gap-8">
+            <div class="w-full flex flex-row gap-8 two-col-images">
                 <!-- Left Image -->
                 <div class="basis-0 grow bg-cover bg-center bg-no-repeat h-[925px] min-h-px min-w-px shrink-0" style="background-image: url('assets/medigo-case-study/media-12.jpg')">
                 </div>
@@ -726,7 +798,7 @@
         <!-- Full Width Image Section -->
         <div class="bg-theme-primary p-8 scroll-animate" data-scroll>
             <div class="w-full mx-auto">
-                <div class="h-[925px] w-full bg-cover bg-center" style="background-image: url('assets/medigo-case-study/media-14.png')"></div>
+                <div class="h-[925px] w-full bg-cover bg-center full-width-image-14" style="background-image: url('assets/medigo-case-study/media-14.png')"></div>
             </div>
         </div>
 
@@ -775,7 +847,7 @@
 
         <!-- Statistics Section -->
         <div class="bg-theme-primary p-8 scroll-animate" data-scroll>
-            <div class="w-full mx-auto flex flex-wrap gap-6">
+            <div class="w-full mx-auto flex flex-wrap gap-6 stats-grid">
                 <!-- Statistic Card 1 -->
                 <div class="basis-0 grow min-w-[300px] bg-theme-primary p-6 border border-theme">
                     <div class="font-inter font-semibold text-[64px] leading-[1.4] text-theme-heading mb-6">
@@ -834,7 +906,7 @@
 
         <!-- Next Steps Section -->
         <div class="bg-theme-primary p-8 scroll-animate" data-scroll>
-            <div class="w-full flex flex-row gap-8 h-[725px]">
+            <div class="w-full flex flex-row gap-8 h-[725px] next-steps-row">
                 <div class="basis-0 grow flex flex-col justify-start">
                     <h2 class="font-syne font-medium text-[32px] leading-[1.4] text-theme-heading mb-14">Where We’re Going</h2>
                     <div class="flex flex-col gap-8">
@@ -876,6 +948,63 @@
             </div>
         </div>
 
+        <!-- Footer (Figma design) -->
+        <footer class="bg-theme-primary px-8 py-12 animate-slide-up footer-figma" style="animation-delay: 1.2s;">
+            <div class="w-full mx-auto flex flex-col lg:flex-row gap-24 items-start justify-between">
+                <!-- Left: Title + Buttons -->
+                <div class="basis-0 grow flex flex-col gap-12">
+                    <h2 class="font-syne font-medium text-[48px] leading-[1.4] text-theme-heading footer-headline">
+                        Every great experience starts with a conversation.
+                    </h2>
+                    <div class="flex gap-8 footer-buttons">
+                        <a href="https://calendly.com/iamlauraledesna/new-meeting?month=2025-08" target="_blank" rel="noopener noreferrer" class="book-call bg-white hover:bg-[#f2f2f2] active:bg-[#e6e6e6] transition-colors duration-150 text-black px-6 py-4 font-syne font-medium not-italic text-[16px] leading-[1.6] whitespace-nowrap" aria-label="Book a call">
+                            Book a call
+                        </a>
+                        <a href="mailto:iamlauraledesna@gmail.com" class="message-btn relative px-6 py-4 hover:bg-white/5 active:bg-white/10 transition-colors duration-150 font-syne font-medium not-italic text-[16px] leading-[1.6] whitespace-nowrap text-theme-heading" aria-label="Send a message">
+                            <span class="absolute inset-0 border border-theme pointer-events-none"></span>
+                            <span class="relative">Message</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: Link columns -->
+                <div class="basis-0 grow grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 w-full " style="
+                padding-top: 16px;
+            ">
+                    <!-- Navigation -->
+                    <div class="flex flex-col gap-4">
+                        <div class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Navigation</div>
+                        <nav class="flex flex-col gap-4 font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                            <a href="index.html" class="footer-link">Home</a>
+                            <a href="ai-solution-case-study.html" class="footer-link">AI Solution</a>
+                            <a href="nestbank-case-study.html" class="footer-link">Nestbank</a>
+                            <a href="medigo-case-study.html" class="footer-link">Medigo</a>
+                        </nav>
+                    </div>
+
+                    <!-- More From Me -->
+                    <div class="flex flex-col gap-4">
+                        <div class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">More From Me</div>
+                        <div class="flex flex-col gap-4 font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                            <a href="#" class="footer-link">Archive</a>
+                            <a href="https://medium.com/@iamlauraledesna" target="_blank" rel="noopener noreferrer" class="footer-link">Medium Articles</a>
+                            <a href="assets/cv-laura-ledesna.pdf" download target="_blank" rel="noopener noreferrer" class="footer-link">Resume</a>
+                        </div>
+                    </div>
+
+                    <!-- Contact Me -->
+                    <div class="flex flex-col gap-4">
+                        <div class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Contact Me</div>
+                        <div class="flex flex-col gap-4 font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                            <a href="https://calendly.com/iamlauraledesna/new-meeting?month=2025-08" target="_blank" rel="noopener noreferrer" class="footer-link">Book a Call</a>
+                            <a href="mailto:iamlauraledesna@gmail.com" class="footer-link">Email</a>
+                            <a href="https://www.linkedin.com/in/iamlauraledesna/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
         <!-- Footer -->
         <footer class="bg-theme-primary px-8 py-6 flex items-center justify-between animate-slide-up" style="animation-delay: 1.2s;">
             <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">

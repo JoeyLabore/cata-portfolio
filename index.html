@@ -6,7 +6,7 @@
     <link rel="icon" type="image/jpg" href="assets/favicon.jpg">
     <title>Laura Ledesna - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;800&family=Inter:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script>
         tailwind.config = {
@@ -391,6 +391,29 @@
             height: 4px;
         }
 
+        /* Footer links: mimic Back to top hover/active underline */
+        .footer-link {
+            position: relative;
+            cursor: pointer;
+            text-decoration: none !important;
+            display: inline-block;            /* hug text */
+            align-self: flex-start;           /* don't stretch in flex column */
+            width: auto;                      /* ensure intrinsic width */
+        }
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--typography-heading);
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+        .footer-link:hover::after { transform: scaleX(1); }
+        .footer-link:active::after { height: 4px; }
+
         /* Navigation Responsive Styles */
         .mobile-menu {
             display: none !important;
@@ -572,6 +595,15 @@
             }
         }
         
+        /* Footer headline size for <= 900px */
+        @media (max-width: 900px) {
+            .footer-headline { font-size: 32px !important; }
+            /* Reduce vertical padding from 48px to 32px */
+            footer.footer-figma { padding-top: 32px !important; padding-bottom: 32px !important; }
+            /* Reduce footer layout gap from 24 to 12 */
+            footer.footer-figma .gap-24 { gap: 3rem !important; }
+        }
+
         /* Global horizontal spacing rules for <= 750px */
         @media (max-width: 750px) {
             /* Override Tailwind paddings used for horizontal page gutters */
@@ -594,6 +626,28 @@
 
             /* Keep wrapper 1px padding on mobile to preserve outer border */
         }
+
+        /* Footer buttons: stack vertically and fill width on very small screens */
+        @media (max-width: 450px) {
+            .footer-buttons {
+                flex-direction: column !important;
+                width: 100% !important;
+            }
+            .footer-buttons > a {
+                width: 100% !important;
+                text-align: center !important;
+            }
+        }
+
+        /* Light mode: Book a call button (starts black, lighten on hover/active) */
+        .light .book-call { background: #000000 !important; color: #ffffff !important; }
+        .light .book-call:hover { background: #0d0d0d !important; }
+        .light .book-call:active { background: #1a1a1a !important; }
+
+        /* Light mode: Message outlined button (starts transparent, darken on hover/active) */
+        .light .message-btn { background: transparent !important; }
+        .light .message-btn:hover { background: rgba(0,0,0,0.05) !important; }
+        .light .message-btn:active { background: rgba(0,0,0,0.10) !important; }
     </style>
 </head>
 <body class="bg-theme-primary">
@@ -764,12 +818,69 @@
             </div>
         </section>
 
-        <!-- Footer -->
+        <!-- Footer (Figma design) -->
+        <footer class="bg-theme-primary px-8 py-12 animate-slide-up footer-figma" style="animation-delay: 1.2s;">
+            <div class="w-full mx-auto flex flex-col lg:flex-row gap-24 items-start justify-between">
+                <!-- Left: Title + Buttons -->
+                <div class="basis-0 grow flex flex-col gap-12">
+                    <h2 class="font-syne font-medium text-[48px] leading-[1.4] text-theme-heading footer-headline">
+                        Every great experience starts with a conversation.
+                    </h2>
+                    <div class="flex gap-8 footer-buttons">
+                        <a href="https://calendly.com/iamlauraledesna/new-meeting?month=2025-08" target="_blank" rel="noopener noreferrer" class="book-call bg-white hover:bg-[#f2f2f2] active:bg-[#e6e6e6] transition-colors duration-150 text-black px-6 py-4 font-syne font-medium not-italic text-[16px] leading-[1.6] whitespace-nowrap" aria-label="Book a call">
+                            Book a call
+                        </a>
+                        <a href="mailto:iamlauraledesna@gmail.com" class="message-btn relative px-6 py-4 hover:bg-white/5 active:bg-white/10 transition-colors duration-150 font-syne font-medium not-italic text-[16px] leading-[1.6] whitespace-nowrap text-theme-heading" aria-label="Send a message">
+                            <span class="absolute inset-0 border border-theme pointer-events-none"></span>
+                            <span class="relative">Message</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: Link columns -->
+                <div class="basis-0 grow grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 w-full " style="
+                padding-top: 16px;
+            ">
+                    <!-- Navigation -->
+                    <div class="flex flex-col gap-4">
+                        <div class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Navigation</div>
+                        <nav class="flex flex-col gap-4 font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                            <a href="index.html" class="footer-link">Home</a>
+                            <a href="ai-solution-case-study.html" class="footer-link">AI Solution</a>
+                            <a href="nestbank-case-study.html" class="footer-link">Nestbank</a>
+                            <a href="medigo-case-study.html" class="footer-link">Medigo</a>
+                        </nav>
+                    </div>
+
+                    <!-- More From Me -->
+                    <div class="flex flex-col gap-4">
+                        <div class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">More From Me</div>
+                        <div class="flex flex-col gap-4 font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                            <a href="#" class="footer-link">Archive</a>
+                            <a href="https://medium.com/@iamlauraledesna" target="_blank" rel="noopener noreferrer" class="footer-link">Medium Articles</a>
+                            <a href="assets/cv-laura-ledesna.pdf" download target="_blank" rel="noopener noreferrer" class="footer-link">Resume</a>
+                        </div>
+                    </div>
+
+                    <!-- Contact Me -->
+                    <div class="flex flex-col gap-4">
+                        <div class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Contact Me</div>
+                        <div class="flex flex-col gap-4 font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
+                            <a href="https://calendly.com/iamlauraledesna/new-meeting?month=2025-08" target="_blank" rel="noopener noreferrer" class="footer-link">Book a Call</a>
+                            <a href="mailto:iamlauraledesna@gmail.com" class="footer-link">Email</a>
+                            <a href="https://www.linkedin.com/in/iamlauraledesna/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+        <!-- Case-study footer (exact copy) -->
         <footer class="bg-theme-primary px-8 py-6 flex items-center justify-between animate-slide-up" style="animation-delay: 1.2s;">
             <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">
                 Laura Ledesna • ©2025
             </div>
-            <button type="button" class="theme-toggle flex items-center gap-2" aria-label="Toggle theme">
+            <button class="theme-toggle flex items-center gap-2" aria-label="Toggle theme">
                 <span class="theme-text font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Toggle theme</span>
                 <i class="ph ph-sun sun-icon icon-theme"></i>
                 <i class="ph ph-moon moon-icon icon-theme"></i>
@@ -952,9 +1063,22 @@
     </script>
 
     <script>
-      window.onbeforeunload = function () {
-        window.scrollTo(0, 0);
-      }
+      // Avoid jumping to top when triggering external handlers like mailto
+      let __skipScrollResetOnLeave = false;
+      document.addEventListener('click', function (e) {
+        const a = e.target && e.target.closest ? e.target.closest('a[href^="mailto:"]') : null;
+        if (a) {
+          __skipScrollResetOnLeave = true;
+          // Reset the flag shortly after to avoid affecting future navigations
+          setTimeout(() => { __skipScrollResetOnLeave = false; }, 1500);
+        }
+      }, true);
+
+      window.addEventListener('beforeunload', function () {
+        if (!__skipScrollResetOnLeave) {
+          window.scrollTo(0, 0);
+        }
+      });
       // Also handle normal loads and bfcache restores
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
