@@ -6,7 +6,7 @@
     <link rel="icon" type="image/jpg" href="assets/favicon.jpg">
     <title>AI Solution Case Study - Laura Ledesna</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@600&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script>
         tailwind.config = {
@@ -37,6 +37,10 @@
         }
     </script>
     <style>
+        /* Roboto Flex helpers for Variable Proximity */
+        .vp-roboto-flex { font-family: "Roboto Flex", sans-serif !important; }
+        .vp-word { display: inline; white-space: nowrap; }
+        .vp-letter { display: inline-block; will-change: font-variation-settings; }
         /* Include all the styles from index.html */
         body {
             margin: 0;
@@ -467,13 +471,16 @@
 
         /* Footer responsive tweaks */
         @media (max-width: 450px) {
-            .footer-buttons { flex-direction: column !important; width: 100% !important; }
+            .footer-buttons { flex-direction: column !important; width: 100% !important; gap: 2rem !important; }
             .footer-buttons > a { width: 100% !important; text-align: center !important; }
         }
         @media (max-width: 900px) {
             .footer-headline { font-size: 32px !important; }
             footer.footer-figma { padding-top: 32px !important; padding-bottom: 32px !important; }
             footer.footer-figma .gap-24 { gap: 3rem !important; }
+            footer.footer-figma .gap-32 { gap: 1.5rem !important; }
+            /* Increase top padding for right link columns */
+            #vp-footer-container > .grid { padding-top: 40px !important; }
         }
 
         /* Light mode button states */
@@ -933,12 +940,12 @@
             </div>
         </div>
 
-        <!-- Footer (Figma design) -->
+        <!-- Footer -->
         <footer class="bg-theme-primary px-8 py-12 animate-slide-up footer-figma" style="animation-delay: 1.2s;">
-            <div class="w-full mx-auto flex flex-col lg:flex-row gap-24 items-start justify-between">
+            <div id="vp-footer-container" class="w-full mx-auto flex flex-col lg:flex-row gap-32 items-start justify-between">
                 <!-- Left: Title + Buttons -->
                 <div class="basis-0 grow flex flex-col gap-12">
-                    <h2 class="font-syne font-medium text-[48px] leading-[1.4] text-theme-heading footer-headline">
+                    <h2 id="vp-footer-headline" class="vp-roboto-flex font-syne font-medium text-[48px] leading-[1.4] text-theme-heading footer-headline">
                         Every great experience starts with a conversation.
                     </h2>
                     <div class="flex gap-8 footer-buttons">
@@ -961,7 +968,6 @@
                         <div class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Navigation</div>
                         <nav class="flex flex-col gap-4 font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
                             <a href="index.html" class="footer-link">Home</a>
-                            <a href="ai-solution-case-study.html" class="footer-link">AI Solution</a>
                             <a href="nestbank-case-study.html" class="footer-link">Nestbank</a>
                             <a href="medigo-case-study.html" class="footer-link">Medigo</a>
                         </nav>
@@ -971,7 +977,6 @@
                     <div class="flex flex-col gap-4">
                         <div class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">More From Me</div>
                         <div class="flex flex-col gap-4 font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
-                            <a href="#" class="footer-link">Archive</a>
                             <a href="https://medium.com/@iamlauraledesna" target="_blank" rel="noopener noreferrer" class="footer-link">Medium Articles</a>
                             <a href="assets/cv-laura-ledesna.pdf" download target="_blank" rel="noopener noreferrer" class="footer-link">Resume</a>
                         </div>
@@ -993,7 +998,7 @@
         <!-- Footer -->
         <footer class="bg-theme-primary px-8 py-6 flex items-center justify-between animate-slide-up" style="animation-delay: 1.2s;">
             <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">
-                Laura Ledesna • ©2025
+                <a href="index.html" class="no-underline text-theme-heading">Laura Ledesna • ©2025</a>
             </div>
             <button class="theme-toggle flex items-center gap-2" aria-label="Toggle theme">
                 <span class="theme-text font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Toggle theme</span>
@@ -1146,6 +1151,105 @@
         fab.addEventListener('click', function(){
           window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+      })();
+    </script>
+    <script>
+      // Variable Proximity effect (vanilla JS) for footer headline
+      (function(){
+        const container = document.getElementById('vp-footer-container');
+        const headline = document.getElementById('vp-footer-headline');
+        if (!container || !headline) return;
+
+        const label = (headline.textContent || '').trim();
+        if (!label) return;
+
+        const radius = 100;
+        const falloff = 'linear';
+        const fromSettings = "'wght' 400, 'opsz' 9";
+        const toSettings = "'wght' 1000, 'opsz' 40";
+
+        function parseSettings(str){
+          const map = new Map();
+          str.split(',').map(s=>s.trim()).forEach(s=>{
+            if (!s) return;
+            const parts = s.split(/\s+/);
+            const axis = parts[0] ? parts[0].replace(/["']/g,'') : '';
+            const value = parts[1] ? parseFloat(parts[1]) : NaN;
+            if (axis && !Number.isNaN(value)) map.set(axis, value);
+          });
+          return map;
+        }
+        const fromMap = parseSettings(fromSettings);
+        const toMap = parseSettings(toSettings);
+        const parsed = [];
+        fromMap.forEach((fromValue, axis)=>{
+          const toValue = toMap.has(axis) ? toMap.get(axis) : fromValue;
+          parsed.push({ axis, fromValue, toValue });
+        });
+
+        const words = label.split(' ');
+        headline.textContent = '';
+        words.forEach((word, wi)=>{
+          const w = document.createElement('span');
+          w.className = 'vp-word';
+          for (let i=0;i<word.length;i++){
+            const l = document.createElement('span');
+            l.className = 'vp-letter';
+            l.textContent = word[i];
+            l.style.fontVariationSettings = fromSettings;
+            w.appendChild(l);
+          }
+          headline.appendChild(w);
+          if (wi < words.length - 1) headline.appendChild(document.createTextNode(' '));
+        });
+
+        const letters = Array.from(headline.querySelectorAll('.vp-letter'));
+        const mouse = { x: 0, y: 0 };
+        const last = { x: null, y: null };
+
+        function falloffValue(distance){
+          const norm = Math.min(Math.max(1 - distance / radius, 0), 1);
+          if (falloff === 'exponential') return norm * norm;
+          if (falloff === 'gaussian') return Math.exp(-((distance / (radius / 2)) ** 2) / 2);
+          return norm;
+        }
+
+        function onMove(clientX, clientY){
+          const rect = container.getBoundingClientRect();
+          mouse.x = clientX - rect.left;
+          mouse.y = clientY - rect.top;
+        }
+
+        window.addEventListener('mousemove', (e)=> onMove(e.clientX, e.clientY), { passive: true });
+        window.addEventListener('touchmove', (e)=> {
+          const t = e.touches && e.touches[0];
+          if (t) onMove(t.clientX, t.clientY);
+        }, { passive: true });
+
+        function loop(){
+          if (last.x !== mouse.x || last.y !== mouse.y){
+            last.x = mouse.x; last.y = mouse.y;
+            const cr = container.getBoundingClientRect();
+            for (const el of letters){
+              const r = el.getBoundingClientRect();
+              const cx = r.left + r.width / 2 - cr.left;
+              const cy = r.top + r.height / 2 - cr.top;
+              const distance = Math.hypot(mouse.x - cx, mouse.y - cy);
+              if (distance >= radius){
+                el.style.fontVariationSettings = fromSettings;
+              } else {
+                const f = falloffValue(distance);
+                const settings = parsed.map(({axis, fromValue, toValue})=>{
+                  const v = fromValue + (toValue - fromValue) * f;
+                  return `'${axis}' ${v}`;
+                }).join(', ');
+                el.style.fontVariationSettings = settings;
+              }
+            }
+          }
+          requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
       })();
     </script>
   </body>
