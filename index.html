@@ -212,6 +212,12 @@
             color: #000 !important;
         }
 
+        /* Prevent scroll past the end (no bounce below footer) */
+        html, body {
+            overscroll-behavior-y: none;
+            overscroll-behavior-x: none;
+        }
+
         /* Responsive: case study card container width */
         .cs-card-wrap { max-width: 950px; }
         @media (max-width: 1500px) {

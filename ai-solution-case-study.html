@@ -501,6 +501,12 @@
         .light .message-btn { background: transparent !important; }
         .light .message-btn:hover { background: rgba(0,0,0,0.05) !important; }
         .light .message-btn:active { background: rgba(0,0,0,0.10) !important; }
+
+        /* Prevent scroll past the end (no bounce below footer) */
+        html, body {
+            overscroll-behavior-y: none;
+            overscroll-behavior-x: none;
+        }
     </style>
 </head>
 <body class="bg-theme-primary">
