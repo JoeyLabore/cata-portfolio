@@ -41,6 +41,11 @@
         .vp-roboto-flex { font-family: "Roboto Flex", sans-serif !important; }
         .vp-word { display: inline; white-space: nowrap; }
         .vp-letter { display: inline-block; will-change: font-variation-settings; }
+        /* Next Steps section responsive height */
+        @media (max-width: 500px) {
+            .next-steps-section { height: 900px !important; }
+            .next-steps-section .w-full { height: 900px !important; }
+        }
         /* Include all the styles from index.html */
         body {
             margin: 0;
@@ -895,7 +900,7 @@
 
 
         <!-- Next Steps Section -->
-        <div class="bg-theme-primary p-8 scroll-animate" data-scroll>
+        <div class="bg-theme-primary p-8 scroll-animate next-steps-section" data-scroll>
             <div class="w-full flex flex-row gap-8 h-[500px]">
                 <div class="basis-0 grow flex flex-col justify-start">
                     <h2 class="font-syne font-medium text-[32px] leading-[1.4] text-theme-heading mb-14">Where we're going</h2>
