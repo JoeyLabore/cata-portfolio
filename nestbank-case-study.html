@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -657,7 +657,7 @@
                     <p class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Role</p>
                 </div>
                 <div class="basis-0 grow">
-                    <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">UX Consultant</p>
+                    <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Senior UX Designer</p>
                 </div>
             </div>
         </div>
@@ -1057,10 +1057,6 @@
                         <a href="https://calendly.com/iamlauraledesna/new-meeting?month=2025-08" target="_blank" rel="noopener noreferrer" class="book-call bg-white hover:bg-[#f2f2f2] active:bg-[#e6e6e6] transition-colors duration-150 text-black px-6 py-4 font-syne font-medium not-italic text-[16px] leading-[1.6] whitespace-nowrap" aria-label="Book a call">
                             Book a call
                         </a>
-                        <a href="mailto:iamlauraledesna@gmail.com" class="message-btn relative px-6 py-4 hover:bg-white/5 active:bg-white/10 transition-colors duration-150 font-syne font-medium not-italic text-[16px] leading-[1.6] whitespace-nowrap text-theme-heading" aria-label="Send a message">
-                            <span class="absolute inset-0 border border-theme pointer-events-none"></span>
-                            <span class="relative">Message</span>
-                        </a>
                     </div>
                 </div>
 
@@ -1138,14 +1134,14 @@
             }, 500);
         }
 
-        // Set initial theme based on stored preference or system preference
+        // Set initial theme based on stored preference; default to dark (ignore system preference)
         function setInitialTheme() {
             const storedTheme = localStorage.getItem('theme');
             if (storedTheme) {
                 setTheme(storedTheme);
             } else {
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                setTheme(prefersDark ? 'dark' : 'light');
+                // Default to dark mode and persist it so system changes won't override
+                setTheme('dark');
             }
         }
         
