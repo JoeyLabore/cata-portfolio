@@ -315,6 +315,12 @@
             filter: brightness(0) saturate(100%) invert(1);
         }
 
+        /* Force black icons inside light footers even when page is dark */
+        footer.light .icon-theme {
+            filter: brightness(0) saturate(100%) !important;
+            color: #000 !important;
+        }
+
         /* Menu Item States */
         .menu-item {
             background-color: var(--surface-primary);
@@ -593,7 +599,7 @@
     </style>
 </head>
 <body class="bg-theme-primary">
-    <div class="min-h-screen bg-theme-inverse p-[1px] flex flex-col gap-[1px] mx-auto" style="max-width: 1536px;">
+    <div class="min-h-screen bg-theme-inverse p-[1px] flex flex-col gap-[1px] mx-auto">
         <!-- Navigation -->
         <nav class="desktop-menu bg-theme-primary h-[82px] flex items-center justify-between pl-8 animate-slide-up nav-animation">
             <a href="index.html" class="font-syne font-medium text-[16px] leading-[1.6] text-theme-heading">Laura Ledesna</a>
@@ -1063,7 +1069,7 @@
         </div>
 
         <!-- Footer -->
-        <footer class="bg-theme-primary px-8 py-12 animate-slide-up footer-figma" style="animation-delay: 1.2s;">
+        <footer class="light bg-theme-primary px-8 py-12 animate-slide-up footer-figma" style="animation-delay: 1.2s;">
             <div id="vp-footer-container" class="w-full mx-auto flex flex-col lg:flex-row gap-32 items-start justify-between">
                 <!-- Left: Title + Buttons -->
                 <div class="basis-0 grow flex flex-col gap-12">
@@ -1114,15 +1120,10 @@
 
         </footer>
         <!-- Footer -->
-        <footer class="bg-theme-primary px-8 py-6 flex items-center justify-between animate-slide-up" style="animation-delay: 1.2s;">
+        <footer class="light bg-theme-primary px-8 py-6 flex items-center justify-between animate-slide-up" style="animation-delay: 1.2s;">
             <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">
                 <a href="index.html" class="no-underline text-theme-heading">Laura Ledesna • ©2025</a>
             </div>
-            <button class="theme-toggle flex items-center gap-2" aria-label="Toggle theme">
-                <span class="theme-text font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Toggle theme</span>
-                <i class="ph ph-sun sun-icon icon-theme"></i>
-                <i class="ph ph-moon moon-icon icon-theme"></i>
-            </button>
             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-button flex items-center gap-2">
                 <span class="scroll-text font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Back to top</span>
                 <div class="relative shrink-0 size-4">
@@ -1151,39 +1152,15 @@
             }, 500);
         }
 
-        // Set initial theme based on stored preference; default to dark (ignore system preference)
+        // Set initial theme: always dark; ignore stored or system preferences
         function setInitialTheme() {
-            const storedTheme = localStorage.getItem('theme');
-            if (storedTheme) {
-                setTheme(storedTheme);
-            } else {
-                // Default to dark mode and persist it so system changes won't override
-                setTheme('dark');
-            }
+            setTheme('dark');
         }
         
         // Call immediately to avoid flash of wrong theme
         setInitialTheme();
 
-        // Listen for system theme changes (only if no stored preference)
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
-                setTheme(e.matches ? 'dark' : 'light');
-            }
-        });
-
-        // Theme Toggle Functionality
-        const themeToggle = document.querySelector('.theme-toggle');
-        
-        themeToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const html = document.documentElement;
-            const newTheme = html.classList.contains('light') ? 'dark' : 'light';
-            setTheme(newTheme);
-            return false;
-        });
+        // Remove theme switching: no listeners or UI
     </script>
 
     <!-- Overlay toggle script -->

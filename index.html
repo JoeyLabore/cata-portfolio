@@ -206,6 +206,31 @@
             filter: brightness(0) saturate(100%) invert(1);
         }
 
+        /* Force black icons inside light footers even when page is dark */
+        footer.light .icon-theme {
+            filter: brightness(0) saturate(100%) !important;
+            color: #000 !important;
+        }
+
+        /* Responsive: case study card container width */
+        .cs-card-wrap { max-width: 950px; }
+        @media (max-width: 1500px) {
+            .cs-card-wrap { max-width: 800px !important; }
+        }
+
+        /* Responsive: About section vertical layout under 900px */
+        @media (max-width: 900px) {
+            .about-section .about-top { flex-direction: column !important; }
+            .about-section .about-image { width: 100% !important; height: 320px; }
+            .about-section .about-row { display: flex !important; flex-direction: column !important; gap: 8px !important; }
+            .about-section .about-row > div { width: 100% !important; flex: 0 0 auto !important; }
+            .about-section .overflow-clip { overflow: visible !important; }
+            .about-section .relative { height: auto !important; min-height: auto !important; }
+            .about-section [aria-hidden="true"] { position: static !important; inset: auto !important; }
+            .about-section .basis-0 { flex-basis: auto !important; }
+            .about-section .about-title { font-size: 32px !important; }
+        }
+
         /* Card States */
         .case-study-card {
             background-color: var(--surface-primary);
@@ -665,7 +690,7 @@
     </style>
 </head>
 <body class="bg-theme-primary">
-    <div class="min-h-screen bg-theme-inverse p-[1px] flex flex-col gap-[1px] mx-auto" style="max-width: 1536px;">
+    <div class="min-h-screen bg-theme-inverse p-[1px] flex flex-col gap-[1px] mx-auto">
         <!-- Navigation -->
         <!-- Desktop Navigation -->
         <nav class="desktop-menu bg-theme-primary h-[82px] flex items-center justify-between pl-8 animate-slide-up nav-animation">
@@ -790,7 +815,7 @@
             </button>
             <div class="flex flex-col space-y-6">
                 <!-- Case Study Card 1 -->
-                <div class="w-full max-w-[792px] animate-slide-up case-study-1">
+                <div class="w-full max-w-[950px] cs-card-wrap animate-slide-up case-study-1">
                     <a href="ai-solution-case-study.html" class="block">
                     <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px] group">
                             <div class="flex-1 relative">
@@ -801,7 +826,7 @@
                             </div>
                             <div class="flex-1 flex flex-col justify-between">
                             <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">MVP • Automation with AI • Zero UI Design</div>
-                            <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">NUVUN - AI Research, Before You Even Ask</div>
+                            <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">AI Research, Before You Even Ask</div>
                             <div class="flex justify-end">
                                 <div class="relative shrink-0 size-8">
                                     <div class="absolute inset-[15%]">
@@ -815,7 +840,7 @@
                 </div>
 
                 <!-- Case Study Card 2 -->
-                <div class="w-full max-w-[792px] self-end scroll-animate" data-scroll>
+                <div class="w-full max-w-[950px] cs-card-wrap self-end scroll-animate" data-scroll>
                     <a href="nestbank-case-study.html" class="block">
                         <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px] group">
                             <div class="flex-1 relative">
@@ -826,7 +851,7 @@
                             </div>
                             <div class="flex-1 flex flex-col justify-between">
                                 <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Design Leadership • 0 - 1 • Cost Saving • High Complexity</div>
-                                <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">Grameen - Inclusive Finance, Powered by Design</div>
+                                <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">Inclusive Finance, Powered by Design</div>
                                 <div class="flex justify-end">
                                     <div class="relative shrink-0 size-8">
                                         <div class="absolute inset-[15%]">
@@ -840,7 +865,7 @@
                 </div>
 
                 <!-- Case Study Card 3 -->
-                <div class="w-full max-w-[792px] scroll-animate" data-scroll>
+                <div class="w-full max-w-[950px] cs-card-wrap scroll-animate" data-scroll>
                     <a href="medigo-case-study.html" class="block">
                         <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px] group">
                             <div class="flex-1 relative">
@@ -851,7 +876,7 @@
                             </div>
                             <div class="flex-1 flex flex-col justify-between">
                             <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">AI-Driven Personalization • Leading Multi-Stakeholder Collaboration • Atomic Research Model</div>
-                            <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">MedBridge - When Doctors Said No to AI</div>
+                            <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">When Doctors Said No to AI</div>
                             <div class="flex justify-end">
                                 <div class="relative shrink-0 size-8">
                                     <div class="absolute inset-[15%]">
@@ -866,8 +891,84 @@
             </div>
         </section>
 
+        <!-- About Section (from Figma) -->
+        <section class="about-section bg-[#3871EF] box-border flex flex-col gap-8 items-start justify-start px-8 pt-8 pb-16 relative w-full" data-node-id="230:909">
+            <!-- Top container: heading/paragraph and image -->
+            <div class="about-top flex w-full gap-8 items-start justify-start">
+                <div class="basis-0 grow min-h-px min-w-px relative border-t border-black">
+                    <div class="flex flex-col gap-8 overflow-clip px-0 py-2 w-full">
+                        <div class="about-row flex w-full gap-[128px] items-start justify-start leading-[0] not-italic">
+                            <div class="about-title basis-0 grow min-h-px min-w-px text-[48px] font-syne font-medium text-black">
+                                <p class="leading-[1.4]">About</p>
+                            </div>
+                            <div class="basis-0 grow min-h-px min-w-px text-[16px] font-syne font-normal text-[#0d0d0d]">
+                                <p class="leading-[1.6]">With over 8 years of experience in UX and UI design, I specialize in creating scalable systems that leverage AI to deliver smarter, more intuitive products. My background spans industries from healthcare to fintech, where I’ve built tools that inspire trust and make a lasting impact.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image bg-center bg-cover bg-no-repeat h-[341px] w-[358px] shrink-0" style="background-image: url('assets/profile-img.jpeg');"></div>
+            </div>
+
+            <!-- Row 1 -->
+            <div class="relative w-full border-t border-black">
+                <div class="flex flex-col gap-8 overflow-clip px-0 py-2 w-full">
+                    <div class="about-row flex w-full gap-[128px] items-start justify-start leading-[0] not-italic text-[16px]">
+                        <div class="basis-0 grow min-h-px min-w-px font-syne font-bold text-black">
+                            <p class="leading-[1.6]">Part of the international book Conscious UX:</p>
+                        </div>
+                        <div class="basis-0 grow min-h-px min-w-px font-syne font-normal text-[#0d0d0d]">
+                            <p class="leading-[1.6]">Selected among 130 industry experts, including Don Norman and Brenda Laurel, for a global compendium on conscious design.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="relative w-full border-t border-black">
+                <div class="flex flex-col gap-8 overflow-clip px-0 py-2 w-full">
+                    <div class="about-row flex w-full gap-[128px] items-start justify-start leading-[0] not-italic text-[16px]">
+                        <div class="basis-0 grow min-h-px min-w-px font-syne font-bold text-black">
+                            <p class="leading-[1.6]">Winning identity for political campaign in NYC:</p>
+                        </div>
+                        <div class="basis-0 grow min-h-px min-w-px font-syne font-normal text-[#0d0d0d]">
+                            <p class="leading-[1.6]">Designed the visual identity and campaign materials for Justin Sanchez, Democratic and WFP candidate, who was elected as City Council Member for New York’s 17th District.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="relative w-full border-t border-black">
+                <div class="flex flex-col gap-8 overflow-clip px-0 py-2 w-full">
+                    <div class="about-row flex w-full gap-[128px] items-start justify-start leading-[0] not-italic text-[16px]">
+                        <div class="basis-0 grow min-h-px min-w-px font-syne font-bold text-black">
+                            <p class="leading-[1.6]">National educational strategy with the Ministry of Education and the Presidency of Colombia:</p>
+                        </div>
+                        <div class="basis-0 grow min-h-px min-w-px font-syne font-normal text-[#0d0d0d]">
+                            <p class="leading-[1.6]">Co-creator of Profe en tu casa, a TV and radio program that ensured access to education during the lockdown. Recognized across Latin America for its inclusive and connectivity-focused approach.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="relative w-full border-t border-black">
+                <div class="flex flex-col gap-8 overflow-clip px-0 py-2 w-full">
+                    <div class="about-row flex w-full gap-[128px] items-start justify-start leading-[0] not-italic text-[16px]">
+                        <div class="basis-0 grow min-h-px min-w-px font-syne font-bold text-black">
+                            <p class="leading-[1.6]">Mentor at ADPList:</p>
+                        </div>
+                        <div class="basis-0 grow min-h-px min-w-px font-syne font-normal text-[#0d0d0d]">
+                            <p class="leading-[1.6]">Provide free 1:1 mentorship to designers worldwide through Amazing Design People List, focusing on UX, AI applied to design, and research.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Footer -->
-        <footer class="bg-theme-primary px-8 py-12 animate-slide-up footer-figma" style="animation-delay: 1.2s;">
+        <footer class="light bg-theme-primary px-8 py-12 animate-slide-up footer-figma" style="animation-delay: 1.2s;">
             <div id="vp-footer-container" class="w-full mx-auto flex flex-col lg:flex-row gap-32 items-start justify-between">
                 <!-- Left: Title + Buttons -->
                 <div class="basis-0 grow flex flex-col gap-12">
@@ -918,15 +1019,10 @@
 
         </footer>
         <!-- Case-study footer -->
-        <footer class="bg-theme-primary px-8 py-6 flex items-center justify-between animate-slide-up" style="animation-delay: 1.2s;">
+        <footer class="light bg-theme-primary px-8 py-6 flex items-center justify-between animate-slide-up" style="animation-delay: 1.2s;">
             <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">
                 <a href="index.html" class="no-underline text-theme-heading">Laura Ledesna • ©2025</a>
             </div>
-            <button class="theme-toggle flex items-center gap-2" aria-label="Toggle theme">
-                <span class="theme-text font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Toggle theme</span>
-                <i class="ph ph-sun sun-icon icon-theme"></i>
-                <i class="ph ph-moon moon-icon icon-theme"></i>
-            </button>
             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-button flex items-center gap-2">
                 <span class="scroll-text font-syne font-normal text-[16px] leading-[1.6] text-theme-heading">Back to top</span>
                 <div class="relative shrink-0 size-4">
@@ -955,40 +1051,15 @@
             }, 500);
         }
 
-        // Set initial theme based on stored preference; default to dark (ignore system preference)
+        // Set initial theme: always dark; ignore stored or system preferences
         function setInitialTheme() {
-            const storedTheme = localStorage.getItem('theme');
-            if (storedTheme) {
-                setTheme(storedTheme);
-            } else {
-                // Default to dark mode and persist it so system changes won't override
-                setTheme('dark');
-            }
+            setTheme('dark');
         }
         
         // Call immediately to avoid flash of wrong theme
         setInitialTheme();
 
-        // Listen for system theme changes (only if no stored preference)
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
-                setTheme(e.matches ? 'dark' : 'light');
-            }
-        });
-
-        // Theme Toggle Functionality
-        const themeToggle = document.querySelector('.theme-toggle');
-        
-        themeToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const html = document.documentElement;
-            const newTheme = html.classList.contains('light') ? 'dark' : 'light';
-            setTheme(newTheme);
-            
-            return false;
-        });
+        // Remove theme switching: no listeners or UI
 
         // Intersection Observer for scroll animations
         const observer = new IntersectionObserver((entries) => {
