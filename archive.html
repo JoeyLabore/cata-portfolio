@@ -232,6 +232,15 @@
       .desktop-menu { display: none !important; }
       .mobile-menu { display: flex !important; padding-left: 16px !important; padding-right: 0 !important; }
     }
+    /* Enforce 16px gutters on mobile/tablet <= 900px */
+    @media (max-width: 900px) {
+      .px-8 { padding-left: 16px !important; padding-right: 16px !important; }
+      .p-8 { padding-left: 16px !important; padding-right: 16px !important; }
+      .pl-8 { padding-left: 16px !important; }
+      .pr-8 { padding-right: 16px !important; }
+      /* Override mobile nav right padding to 16px (previously 0 under 700px) */
+      .mobile-menu { padding-right: 16px !important; }
+    }
   </style>
   <!-- React + ReactDOM UMD -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
