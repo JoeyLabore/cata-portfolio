@@ -4,7 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/jpg" href="assets/favicon.jpg">
-    <title>Laura Ledesna - Portfolio</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>Laura Ledesna - UX/UI Designer Portfolio</title>
+    <meta name="title" content="Laura Ledesna - UX/UI Designer Portfolio" />
+    <meta name="description" content="Portfolio of Laura Ledesna, UX/UI designer specialized in innovative digital solutions. Explore my case studies and design projects." />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://lauraledesna.io/" />
+    <meta property="og:title" content="Laura Ledesna - UX/UI Designer Portfolio" />
+    <meta property="og:description" content="Portfolio of Laura Ledesna, UX/UI designer specialized in innovative digital solutions. Explore my case studies and design projects." />
+    <meta property="og:image" content="http://lauraledesna.io/assets/lauraledesma-min.webp" />
+    
+    <!-- X (Twitter) -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="http://lauraledesna.io/" />
+    <meta property="twitter:title" content="Laura Ledesna - UX/UI Designer Portfolio" />
+    <meta property="twitter:description" content="Portfolio of Laura Ledesna, UX/UI designer specialized in innovative digital solutions. Explore my case studies and design projects." />
+    <meta property="twitter:image" content="http://lauraledesna.io/assets/lauraledesma-min.webp" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@600&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -960,7 +978,12 @@
                                 <p class="leading-[1.4]">About</p>
                             </div>
                             <div class="basis-0 grow min-h-px min-w-px text-[16px] font-syne font-normal text-[#FFFFFF]">
-                                <p class="leading-[1.6]">With over 8 years of experience in UX and UI design, I specialize in creating scalable systems that leverage AI to deliver smarter, more intuitive products. My background spans industries from healthcare to fintech, where I’ve built tools that inspire trust and make a lasting impact.</p>
+                                <p class="leading-[1.6]">I design products, yes.
+                                    But what I really design are systems that never forget there’s a real person on the other side of the screen.
+                                    I was born in Colombia and now live in Harlem, NYC. I didn’t just migrate geographically, I also shifted professionally: from visual design to research-driven strategy, and more recently, into applied AI integration.
+                                    <br>
+                                    <br>
+                                    Along the way, I’ve led projects in healthcare, government, finance, and education across both Latin America and the U.S.</p>
                             </div>
                         </div>
                     </div>
@@ -1001,7 +1024,7 @@
                 <div class="flex flex-col gap-8 overflow-clip px-0 pt-6 pb-2 w-full">
                     <div class="about-row flex w-full gap-[128px] items-start justify-start leading-[0] not-italic text-[16px]">
                         <div class="basis-0 grow min-h-px min-w-px font-syne font-bold text-[#FFFFFF]">
-                            <p class="leading-[1.6]">National educational strategy with the Ministry of Education and the Presidency of Colombia:</p>
+                            <p class="leading-[1.6]">National education strategy with Colombia’s Presidency:</p>
                         </div>
                         <div class="basis-0 grow min-h-px min-w-px font-syne font-normal text-[#FFFFFF]">
                             <p class="leading-[1.6]">Co-creator of Profe en tu casa, a TV and radio program that ensured access to education during the lockdown. Recognized across Latin America for its inclusive and connectivity-focused approach.</p>
@@ -1047,7 +1070,7 @@
             <div id="vp-footer-container" class="w-full mx-auto flex flex-col lg:flex-row gap-32 items-start justify-between">
                 <!-- Left: Title + Buttons -->
                 <div class="basis-0 grow flex flex-col gap-12">
-                    <h2 id="vp-footer-headline" class="vp-roboto-flex font-syne font-medium text-[48px] leading-[1.4] text-theme-heading footer-headline scroll-animate" data-scroll>
+                    <h2 id="vp-footer-headline" class="font-syne font-medium text-[48px] leading-[1.4] text-theme-heading footer-headline scroll-animate" data-scroll>
                         Every great experience starts with a conversation.
                     </h2>
                     <div class="flex gap-8 footer-buttons scroll-animate" data-scroll>
@@ -1065,9 +1088,9 @@
                     <div class="flex flex-col gap-4 scroll-animate" data-scroll>
                         <div class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Navigation</div>
                         <nav class="flex flex-col gap-4 font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
-                            <a href="ai-solution-case-study.html" class="footer-link">AI Solution</a>
-                            <a href="nestbank-case-study.html" class="footer-link">Nestbank</a>
-                            <a href="medigo-case-study.html" class="footer-link">Medigo</a>
+                            <a href="ai-solution-case-study.html" class="footer-link">AI UXOps</a>
+                            <a href="nestbank-case-study.html" class="footer-link">Fintech</a>
+                            <a href="medigo-case-study.html" class="footer-link">Heathtech</a>
                         </nav>
                     </div>
 
@@ -1365,7 +1388,7 @@
       (function(){
         const container = document.getElementById('vp-footer-container');
         const headline = document.getElementById('vp-footer-headline');
-        if (!container || !headline) return;
+        return; // disabled footer hover effect on headline
 
         const label = (headline.textContent || '').trim();
         if (!label) return;

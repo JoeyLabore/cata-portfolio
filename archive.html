@@ -4,7 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/jpg" href="assets/favicon.jpg" />
+  
+  <!-- Primary Meta Tags -->
   <title>Archive - Laura Ledesna</title>
+  <meta name="title" content="Archive - Laura Ledesna" />
+  <meta name="description" content="Archive of projects and previous work by Laura Ledesna. Explore a collection of UX/UI designs and creative projects developed throughout my career." />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://lauraledesna.io/archive.html" />
+  <meta property="og:title" content="Archive - Laura Ledesna" />
+  <meta property="og:description" content="Archive of projects and previous work by Laura Ledesna. Explore a collection of UX/UI designs and creative projects developed throughout my career." />
+  <meta property="og:image" content="http://lauraledesna.io/assets/lauraledesma-min.webp" />
+  
+  <!-- X (Twitter) -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="http://lauraledesna.io/archive.html" />
+  <meta property="twitter:title" content="Archive - Laura Ledesna" />
+  <meta property="twitter:description" content="Archive of projects and previous work by Laura Ledesna. Explore a collection of UX/UI designs and creative projects developed throughout my career." />
+  <meta property="twitter:image" content="http://lauraledesna.io/assets/lauraledesma-min.webp" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@600&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -452,7 +470,7 @@
             <div id="vp-footer-container" class="w-full mx-auto flex flex-col lg:flex-row gap-32 items-start justify-between">
                 <!-- Left: Title + Buttons -->
                 <div class="basis-0 grow flex flex-col gap-12">
-                    <h2 id="vp-footer-headline" class="vp-roboto-flex font-syne font-medium text-[48px] leading-[1.4] text-theme-heading footer-headline scroll-animate" data-scroll>
+                    <h2 id="vp-footer-headline" class="font-syne font-medium text-[48px] leading-[1.4] text-theme-heading footer-headline scroll-animate" data-scroll>
                         Every great experience starts with a conversation.
                     </h2>
                     <div class="flex gap-8 footer-buttons scroll-animate" data-scroll>
@@ -471,9 +489,9 @@
                         <div class="font-syne font-bold text-[16px] leading-[1.6] text-theme-heading">Navigation</div>
                         <nav class="flex flex-col gap-4 font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">
                             <a href="index.html" class="footer-link">Home</a>
-                            <a href="ai-solution-case-study.html" class="footer-link">AI Solution</a>
-                            <a href="nestbank-case-study.html" class="footer-link">Nestbank</a>
-                            <a href="medigo-case-study.html" class="footer-link">Medigo</a>
+                            <a href="ai-solution-case-study.html" class="footer-link">AI UXOps</a>
+                            <a href="nestbank-case-study.html" class="footer-link">Fintech</a>
+                            <a href="medigo-case-study.html" class="footer-link">Heathtech</a>
                         </nav>
                     </div>
 
@@ -918,6 +936,7 @@
   <script>
     // Variable Proximity effect (vanilla JS) for footer headline (match index)
     (function(){
+      return; // disabled footer hover effect on headline
       const container = document.getElementById('vp-footer-container');
       const headline = document.getElementById('vp-footer-headline');
       if (!container || !headline) return;
