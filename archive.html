@@ -829,7 +829,7 @@
           const originalPos = originalTilePositionRef.current;
           if (!originalPos) {
             overlay.remove(); if (refDiv) refDiv.remove(); parent.style.setProperty('--rot-y-delta', `0deg`); parent.style.setProperty('--rot-x-delta', `0deg`);
-            el.style.visibility=''; el.style.zIndex=0; focusedElRef.current=null; rootRef.current?.removeAttribute('data-enlarging'); openingRef.current=false; return;
+            el.style.visibility=''; el.style.zIndex=0; focusedElRef.current=null; rootRef.current?.removeAttribute('data-enlarging'); openingRef.current=false; unlockScroll(); return;
           }
           const currentRect = overlay.getBoundingClientRect(); const rootRect = rootRef.current.getBoundingClientRect();
           const originalPosRelativeToRoot = { left: originalPos.left - rootRect.left, top: originalPos.top - rootRect.top, width: originalPos.width, height: originalPos.height };
@@ -841,7 +841,7 @@
           requestAnimationFrame(()=>{ animatingOverlay.style.left = originalPosRelativeToRoot.left+'px'; animatingOverlay.style.top = originalPosRelativeToRoot.top+'px'; animatingOverlay.style.width = originalPosRelativeToRoot.width+'px'; animatingOverlay.style.height = originalPosRelativeToRoot.height+'px'; animatingOverlay.style.opacity='0'; });
           const cleanup = () => {
             animatingOverlay.remove(); originalTilePositionRef.current = null; if (refDiv) refDiv.remove(); parent.style.transition='none'; el.style.transition='none'; parent.style.setProperty('--rot-y-delta', `0deg`); parent.style.setProperty('--rot-x-delta', `0deg`);
-            requestAnimationFrame(()=>{ el.style.visibility=''; el.style.opacity='0'; el.style.zIndex=0; focusedElRef.current=null; rootRef.current?.removeAttribute('data-enlarging'); requestAnimationFrame(()=>{ parent.style.transition=''; el.style.transition='opacity 300ms ease-out'; requestAnimationFrame(()=>{ el.style.opacity='1'; setTimeout(()=>{ el.style.transition=''; el.style.opacity=''; openingRef.current=false; if (!draggingRef.current && rootRef.current?.getAttribute('data-enlarging') !== 'true') document.body.classList.remove('dg-scroll-lock'); }, 300); }); }); });
+            requestAnimationFrame(()=>{ el.style.visibility=''; el.style.opacity='0'; el.style.zIndex=0; focusedElRef.current=null; rootRef.current?.removeAttribute('data-enlarging'); requestAnimationFrame(()=>{ parent.style.transition=''; el.style.transition='opacity 300ms ease-out'; requestAnimationFrame(()=>{ el.style.opacity='1'; setTimeout(()=>{ el.style.transition=''; el.style.opacity=''; openingRef.current=false; if (!draggingRef.current && rootRef.current?.getAttribute('data-enlarging') !== 'true') unlockScroll(); }, 300); }); }); });
           };
           animatingOverlay.addEventListener('transitionend', cleanup, { once: true });
         };
@@ -915,7 +915,7 @@
         }
       };
 
-      useEffect(() => { return () => { document.body.classList.remove('dg-scroll-lock'); }; }, []);
+      useEffect(() => { return () => { unlockScroll(); }; }, []);
 
       const cssStyles = `
         .sphere-root { --radius: 520px; --viewer-pad: 72px; --circ: calc(var(--radius) * 3.14); --rot-y: calc((360deg / var(--segments-x)) / 2); --rot-x: calc((360deg / var(--segments-y)) / 2); --item-width: calc(var(--circ) / var(--segments-x)); --item-height: calc(var(--circ) / var(--segments-y)); }
