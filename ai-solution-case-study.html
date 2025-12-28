@@ -162,6 +162,11 @@
                       filter 0.5s ease;
         }
 
+        /* Ensure predictable sizing */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
         .theme-transition-active {
             animation: themeTransition 0.5s ease forwards;
         }
@@ -214,6 +219,11 @@
 
         /* Force black icons inside light footers even when page is dark */
         footer.light .icon-theme {
+            filter: brightness(0) saturate(100%) !important;
+            color: #000 !important;
+        }
+        /* Force black icons inside any light section even when page is dark */
+        .light .icon-theme {
             filter: brightness(0) saturate(100%) !important;
             color: #000 !important;
         }
@@ -488,10 +498,48 @@
         .footer-link:hover::after { transform: scaleX(1); }
         .footer-link:active::after { height: 4px; }
 
+        /* Inline underline link (thicker on press, bigger gap) */
+        .inline-underline {
+            position: relative;
+            text-decoration: none !important;
+            display: inline-block; /* ensure underline width matches text */
+        }
+        .inline-underline::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -0.5px; /* reduced gap to 0.5px */
+            width: 100%;
+            height: 1px;
+            background-color: var(--typography-heading);
+            transform: scaleX(1); /* visible by default */
+            transform-origin: left center;
+            transition: transform 0.2s ease, height 0.1s ease;
+        }
+        .inline-underline:hover::after {
+            transform: scaleX(1);
+            height: 2px; /* 1px thicker on hover */
+        }
+        .inline-underline:active::after {
+            height: 4px; /* thicker on press */
+        }
+
         /* Footer responsive tweaks */
         @media (max-width: 450px) {
             .footer-buttons { flex-direction: column !important; width: 100% !important; gap: 2rem !important; }
             .footer-buttons > a { width: 100% !important; text-align: center !important; }
+        }
+        /* Medium card responsive: image full width at <=900px */
+        @media (max-width: 900px) {
+            .medium-feature a > .flex > div:first-child {
+                width: 100% !important;
+                height: 200px !important;
+            }
+            .medium-feature a > .flex > div:last-child {
+                min-height: auto !important;
+                justify-content: flex-start !important; /* stop stretching to bottom */
+                row-gap: 12px !important; /* 12px between description and date */
+            }
         }
         @media (max-width: 900px) {
             .footer-headline { font-size: 32px !important; }
@@ -514,6 +562,98 @@
         html, body {
             overscroll-behavior-y: none;
             overscroll-behavior-x: none;
+        }
+
+        /* Force vertical (mobile) layout for the related case study cards on this page */
+        .related-cases .case-study-card {
+            background-color: var(--surface-primary);
+            transition: background-color 0.2s ease;
+            border-color: var(--stroke-border);
+            flex-direction: column !important;
+            gap: 0 !important;
+            height: auto !important;
+            padding: 12px !important; /* match mobile card padding */
+        }
+        @media (min-width: 601px) {
+            .related-cases .case-study-card:hover {
+                background-color: var(--surface-secondary);
+            }
+        }
+        .related-cases .case-study-card:active {
+            background-color: var(--surface-tertiary);
+        }
+        .related-cases .case-study-card > div:first-child {
+            position: relative !important;
+            width: 100% !important;
+            height: 200px !important;
+            flex: none !important;
+        }
+        .related-cases .case-study-card > div:first-child > .absolute { /* bg image and video overlay */
+            inset: 0 !important;
+        }
+        .related-cases .case-study-card > div:last-child {
+            width: 100% !important;
+            padding-top: 16px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-start !important;
+            row-gap: 16px !important; /* 16px between industry, title, icon */
+        }
+        .related-cases .case-study-card > div:last-child > div:nth-child(2) { /* Title size */
+            font-size: 20px !important;
+            line-height: 1.4 !important;
+        }
+        /* Arrow anchored bottom-right with padding clearance */
+        .related-cases .case-study-card > div:last-child {
+            position: relative !important;
+            padding-bottom: 40px !important; /* space for arrow */
+        }
+        .related-cases .case-study-card > div:last-child > div:last-child {
+            position: absolute !important;
+            right: 0 !important;
+            bottom: 0 !important;
+        }
+        /* Equal height cards and fixed 3-up horizontal row using Grid (prevents overflow) */
+        .related-cases > .flex { /* the cards row wrapper */
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            align-items: stretch !important;
+            /* gap-6 class remains and applies to grid as well */
+            overflow-x: hidden; /* avoid subpixel overflow */
+        }
+        @media (max-width: 900px) {
+            .related-cases > .flex {
+                grid-template-columns: 1fr !important; /* stack vertically under 900px */
+            }
+        }
+        .related-cases .basis-0.grow.min-w-\[300px\] { /* each column wrapper as grid item */
+            display: flex !important; /* keep inner flex for equal-height card fill */
+            flex: initial !important; /* neutralize flex sizing from earlier */
+            max-width: none !important;
+            min-width: 0 !important; /* allow shrinking without overflow */
+            box-sizing: border-box !important;
+        }
+        .related-cases .basis-0.grow.min-w-\[300px\] > a { /* anchor fills column */
+            display: flex !important;
+            width: 100% !important;
+            flex: 1 1 auto !important;
+        }
+        .related-cases .case-study-card { /* card fills available height and width */
+            height: 100% !important;
+            width: 100% !important;
+        }
+        /* Medium feature card interactions (mirror case-study-card states) */
+        .medium-feature a {
+            background-color: var(--surface-primary);
+            transition: background-color 0.2s ease;
+        }
+        @media (min-width: 601px) {
+            .medium-feature a:hover {
+                background-color: var(--surface-secondary);
+            }
+        }
+        .medium-feature a:active {
+            background-color: var(--surface-tertiary);
         }
     </style>
 </head>
@@ -985,7 +1125,116 @@
             </div>
         </div>
 
+                <!-- Featured Medium Article -->
+                <section class="bg-theme-primary px-8 pt-[56px] pb-[56px] scroll-animate medium-feature" data-scroll>
+                    <div class="w-full mx-auto flex flex-col gap-6">
+                        <h2 class="font-syne font-medium text-[32px] leading-[1.4] text-theme-heading text-center">Want to know more about this project?</h2>
+                        <p class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph text-center opacity-80">Read more on my <a href="https://medium.com/@iamlauraledesna" target="_blank" rel="noopener noreferrer" class="inline-underline">Medium</a></p>
+                        <a href="https://medium.com/@iamlauraledesna/anti-convergence-design-technology-that-scales-diversity-9360cea37ef1" target="_blank" rel="noopener noreferrer" class="block border border-theme p-4 group bg-theme-primary mt-[24px] max-w-[950px] mx-auto">
+                            <div class="flex flex-row items-center gap-6">
+                                <!-- Visual / Thumbnail Placeholder -->
+                                <div class="shrink-0 w-[300px] h-[180px] border border-theme bg-theme-primary relative flex items-center justify-center" style="background-image: url('https://miro.medium.com/v2/resize:fit:1200/1*BmXtqASXXUClTY1TnNhcKg.jpeg'); background-size: cover; background-position: center;"></div>
+                                <!-- Text Content -->
+                                <div class="basis-0 grow flex flex-col min-h-[180px] justify-between">
+                                    <div class="flex flex-col gap-3">
+                                        <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">
+                                            Anti-Convergence Design: Technology that Scales Diversity
+                                        </div>
+                                        <div class="font-syne font-normal font-[400] text-[16px] leading-[1.6] text-theme-paragraph">
+                                            How do we design systems that grow without erasing different ways of thinking?
+                                        </div>
+                                    </div>
+                                    <div class="font-syne font-normal font-[400] text-[16px] leading-[1.6] text-theme-paragraph opacity-70">
+                                        Sep 9 • Medium
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
         <!-- Footer -->
+        <!-- Related Case Studies -->
+        <section class="light bg-theme-primary px-8 pt-[54px] pb-[54px] animate-slide-up related-cases" style="animation-delay: 1.0s;">
+            <h2 class="font-syne font-medium text-[32px] leading-[1.4] text-theme-heading mb-[48px]">More from me</h2>
+            <div class="w-full mx-auto flex flex-row gap-6 flex-wrap">
+                <!-- Case Study: Nestbank (Fintech) -->
+                <div class="basis-0 grow min-w-[300px]">
+                    <a href="nestbank-case-study.html" class="block">
+                        <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px] group">
+                            <div class="flex-1 relative">
+                                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/nestbank-case-study/media-13.png')"></div>
+                                <video class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100" autoplay muted loop playsinline>
+                                    <source src="assets/nestbank-case-study/media-14.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="flex-1 flex flex-col justify-between">
+                                <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Lead UX • Fintech • 0-1 • Grameen America</div>
+                                <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">Inclusive Finance, Powered by Design</div>
+                                <div class="flex justify-end">
+                                    <div class="relative shrink-0 size-8">
+                                        <div class="absolute inset-[15%]">
+                                            <img src="assets/ArrowDownRight.svg" alt="Arrow" class="block max-w-none size-full icon-theme">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Case Study: Medigo (Healthtech) -->
+                <div class="basis-0 grow min-w-[300px]">
+                    <a href="medigo-case-study.html" class="block">
+                        <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px] group">
+                            <div class="flex-1 relative">
+                                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/medigo-case-study/media-20.png')"></div>
+                                <video class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100" autoplay muted loop playsinline>
+                                    <source src="assets/medigo-case-study/media-19.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="flex-1 flex flex-col justify-between">
+                                <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Lead UX • Healthtech • AI Driven • MedBridge</div>
+                                <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">When Doctors Said No to AI</div>
+                                <div class="flex justify-end">
+                                    <div class="relative shrink-0 size-8">
+                                        <div class="absolute inset-[15%]">
+                                            <img src="assets/ArrowDownRight.svg" alt="Arrow" class="block max-w-none size-full icon-theme">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Archive Card -->
+                <div class="basis-0 grow min-w-[300px]">
+                    <a href="archive.html" class="block">
+                        <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px] group">
+                            <div class="flex-1 relative">
+                                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/archive/archive.png')"></div>
+                                <video class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100" autoplay muted loop playsinline>
+                                    <source src="assets/archive/archive.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="flex-1 flex flex-col justify-between">
+                                <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Collection • More Work</div>
+                                <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">Explore the Archive</div>
+                                <div class="flex justify-end">
+                                    <div class="relative shrink-0 size-8">
+                                        <div class="absolute inset-[15%]">
+                                            <img src="assets/ArrowDownRight.svg" alt="Arrow" class="block max-w-none size-full icon-theme">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <footer class="light bg-theme-primary px-8 py-12 animate-slide-up footer-figma" style="animation-delay: 1.2s;">
             <div id="vp-footer-container" class="w-full mx-auto flex flex-col lg:flex-row gap-32 items-start justify-between">
                 <!-- Left: Title + Buttons -->

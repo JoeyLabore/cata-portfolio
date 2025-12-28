@@ -389,16 +389,16 @@
 
         /* Tile Hover Styles */
         .tile-paragraph {
-            opacity: 0;
-            max-height: 0;
-            transition: opacity 0.3s ease, max-height 0.3s ease;
-            overflow: hidden;
+            opacity: 1;
+            max-height: none;
+            transition: none;
+            overflow: visible;
         }
 
         @media (min-width: 1201px) {
             .tile:hover .tile-paragraph {
                 opacity: 1;
-                max-height: 200px;
+                max-height: none;
             }
         }
 
@@ -515,10 +515,10 @@
     /* Collapsible paragraph in tiles */
     .tile { cursor: pointer; }
     .tile .tile-paragraph {
-        overflow: hidden;
-        max-height: 0;
-        opacity: 0;
-        transition: max-height 250ms ease, opacity 200ms ease;
+        overflow: visible;
+        max-height: none;
+        opacity: 1;
+        transition: none;
     }
     .scroll-text { -webkit-tap-highlight-color: transparent; }
     /* Remove 1px flex gap that shows as a right stripe on small screens */
@@ -563,10 +563,10 @@
             /* Collapsible paragraph in tiles */
             .tile { cursor: pointer; }
             .tile .tile-paragraph {
-                overflow: hidden;
-                max-height: 0;
-                opacity: 0;
-                transition: max-height 250ms ease, opacity 200ms ease;
+                overflow: visible;
+                max-height: none;
+                opacity: 1;
+                transition: none;
             }
             .scroll-text { -webkit-tap-highlight-color: transparent; }
             /* Remove 1px flex gap that shows as a right stripe on small screens */
@@ -883,7 +883,7 @@
                                 </video>
                             </div>
                             <div class="flex-1 flex flex-col justify-between">
-                            <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Product Strategist • AI • Zero UI Design</div>
+                            <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Product Strategist • AI • Zero UI Design • NUVUN</div>
                             <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">AI Research, Before You Even Ask</div>
                             <div class="flex justify-end">
                                 <div class="relative shrink-0 size-8">
@@ -908,7 +908,7 @@
                                 </video>
                             </div>
                             <div class="flex-1 flex flex-col justify-between">
-                                <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Senior UX Designer • Fintech • 0-1</div>
+                                <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Lead UX • Fintech • 0-1 • Grameen America</div>
                                 <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">Inclusive Finance, Powered by Design</div>
                                 <div class="flex justify-end">
                                     <div class="relative shrink-0 size-8">
@@ -933,7 +933,7 @@
                                 </video>
                             </div>
                             <div class="flex-1 flex flex-col justify-between">
-                            <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Lead UX Designer • Healthtech • AI Driven</div>
+                            <div class="font-syne font-normal text-[16px] leading-[1.6] text-theme-paragraph">Lead UX • Healthtech • AI Driven • MedBridge</div>
                             <div class="font-syne font-medium text-[24px] leading-[1.4] text-theme-heading">When Doctors Said No to AI</div>
                             <div class="flex justify-end">
                                 <div class="relative shrink-0 size-8">
