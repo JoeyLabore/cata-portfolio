@@ -1275,33 +1275,9 @@
     </script>
 
     <script>
-      // Avoid jumping to top when triggering external handlers like mailto
-      let __skipScrollResetOnLeave = false;
-      document.addEventListener('click', function (e) {
-        const a = e.target && e.target.closest ? e.target.closest('a[href^="mailto:"]') : null;
-        if (a) {
-          __skipScrollResetOnLeave = true;
-          // Reset the flag shortly after to avoid affecting future navigations
-          setTimeout(() => { __skipScrollResetOnLeave = false; }, 1500);
-        }
-      }, true);
-
-      window.addEventListener('beforeunload', function () {
-        if (!__skipScrollResetOnLeave) {
-          window.scrollTo(0, 0);
-        }
-      });
-      // Also handle normal loads and bfcache restores
-      if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-      }
+      // Scroll to top on fresh page loads; browser handles scroll restoration for back/forward navigation
       window.addEventListener('load', function () {
         window.scrollTo(0, 0);
-      });
-      window.addEventListener('pageshow', function (e) {
-        if (e.persisted) {
-          window.scrollTo(0, 0);
-        }
       });
     </script>
     <script>
