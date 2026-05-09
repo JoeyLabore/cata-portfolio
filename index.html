@@ -43,16 +43,8 @@
         .vp-roboto-flex { font-family: "Roboto Flex", sans-serif !important; }
         .vp-word { display: inline; white-space: nowrap; }
         .vp-letter { display: inline-block; will-change: font-variation-settings; }
-        /* Thumbnails: show videos by default on tablet/mobile */
-        @media (max-width: 1200px) {
-            /* Reveal the <video> overlay */
-            .case-study-card video {
-                opacity: 1 !important;
-            }
-            /* Hide the static background image underneath */
-            .case-study-card .absolute.bg-cover {
-                opacity: 0 !important;
-            }
+        .case-study-card video {
+            pointer-events: none;
         }
 
         /* Full-screen menu overlay */
@@ -68,13 +60,16 @@
             border-top: 1px solid var(--stroke-border); /* border below header */
             /* Animation base */
             opacity: 0;
+            visibility: hidden;
             transform: translateY(-8px);
-            transition: opacity 200ms ease, transform 200ms ease;
+            transition: opacity 200ms ease, transform 200ms ease, visibility 0s linear 200ms;
             pointer-events: none;
         }
         .menu-overlay.open { 
             opacity: 1; 
+            visibility: visible;
             transform: none; 
+            transition: opacity 200ms ease, transform 200ms ease;
             pointer-events: auto;
         }
         .menu-overlay .overlay-content {
@@ -116,10 +111,18 @@
         /* 48px from 03 section above and 48px from cards below */
         #case-studies { padding-top: 48px; padding-bottom: 64px; }
         #case-studies .scroll-button { margin-bottom: 48px; }
-        html, body {
+        html {
             margin: 0;
             padding: 0;
             overflow-x: hidden; /* avoid accidental horizontal scroll */
+            overflow-y: auto;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            touch-action: pan-y;
         }
 
         /* Theme Variables */
@@ -212,10 +215,15 @@
             color: #000 !important;
         }
 
-        /* Prevent scroll past the end (no bounce below footer) */
+        /* Prevent bounce at the top/bottom and sides of the page */
         html, body {
             overscroll-behavior-y: none;
             overscroll-behavior-x: none;
+        }
+
+        html.menu-scroll-lock,
+        body.menu-scroll-lock {
+            overflow: hidden;
         }
 
         /* Responsive: case study card container width */
@@ -878,7 +886,7 @@
                     <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px] group">
                             <div class="flex-1 relative">
                                 <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/ai-solution-case-study/media-13.png')"></div>
-                                <video class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100" autoplay muted loop playsinline>
+                                <video class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100" muted loop playsinline preload="none">
                                     <source src="assets/ai-solution-case-study/media-14.mp4" type="video/mp4">
                                 </video>
                             </div>
@@ -903,7 +911,7 @@
                         <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px] group">
                             <div class="flex-1 relative">
                                 <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/nestbank-case-study/media-13.png')"></div>
-                                <video class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100" autoplay muted loop playsinline>
+                                <video class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100" muted loop playsinline preload="none">
                                     <source src="assets/nestbank-case-study/media-14.mp4" type="video/mp4">
                                 </video>
                             </div>
@@ -928,7 +936,7 @@
                         <div class="case-study-card border border-theme p-2 flex gap-4 h-[299px] group">
                             <div class="flex-1 relative">
                                 <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/medigo-case-study/media-20.png')"></div>
-                                <video class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100" autoplay muted loop playsinline>
+                                <video class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100" muted loop playsinline preload="none">
                                     <source src="assets/medigo-case-study/media-19.mp4" type="video/mp4">
                                 </video>
                             </div>
@@ -1256,18 +1264,54 @@
     </script>
 
     <script>
-      // Ensure each page starts at the top on initial load or bfcache restore
+      // Let the document stay as the single scroll container.
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
       }
-      window.addEventListener('load', function () {
-        window.scrollTo(0, 0);
-      });
       window.addEventListener('pageshow', function (e) {
         if (e.persisted) {
           window.scrollTo(0, 0);
         }
       });
+    </script>
+    <script>
+      // Keep homepage card videos idle until someone intentionally previews one.
+      (function () {
+        const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        const videos = Array.from(document.querySelectorAll('.case-study-card video'));
+        if (!videos.length) return;
+
+        function pauseVideo(video) {
+          video.pause();
+        }
+
+        function playVideo(video) {
+          videos.forEach((other) => {
+            if (other !== video) pauseVideo(other);
+          });
+          video.play().catch(() => {});
+        }
+
+        videos.forEach((video) => {
+          const card = video.closest('.case-study-card');
+          if (!card) return;
+
+          video.pause();
+          video.preload = 'none';
+
+          if (canHover) {
+            card.addEventListener('pointerenter', () => playVideo(video));
+            card.addEventListener('pointerleave', () => pauseVideo(video));
+          }
+
+          card.addEventListener('focusin', () => playVideo(video));
+          card.addEventListener('focusout', () => pauseVideo(video));
+        });
+
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) videos.forEach(pauseVideo);
+        });
+      })();
     </script>
     <script>
       // Mobile full-screen overlay menu (active only when <=600px)
@@ -1277,24 +1321,13 @@
         if (!toggle || !overlay) return;
         const mql = window.matchMedia('(max-width: 600px)');
 
-        let __overlayScrollY = 0;
         function lockScroll(){
-          __overlayScrollY = window.scrollY || window.pageYOffset || 0;
-          document.documentElement.style.overflow = 'hidden';
-          document.body.style.position = 'fixed';
-          document.body.style.top = `-${__overlayScrollY}px`;
-          document.body.style.left = '0';
-          document.body.style.right = '0';
-          document.body.style.width = '100%';
+          document.documentElement.classList.add('menu-scroll-lock');
+          document.body.classList.add('menu-scroll-lock');
         }
         function unlockScroll(){
-          document.documentElement.style.overflow = '';
-          document.body.style.position = '';
-          document.body.style.top = '';
-          document.body.style.left = '';
-          document.body.style.right = '';
-          document.body.style.width = '';
-          window.scrollTo(0, __overlayScrollY || 0);
+          document.documentElement.classList.remove('menu-scroll-lock');
+          document.body.classList.remove('menu-scroll-lock');
         }
 
         function openOverlay(){
